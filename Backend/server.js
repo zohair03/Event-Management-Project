@@ -1,8 +1,19 @@
 import express from "express";
+import dotenv from "dotenv";
+import cors from 'cors';
+
+dotenv.config({path: './.env'})
 
 const app = express();
 
-const PORT = 3000;
+app.use(cors(
+    {
+        origin: process.env.CORS_ORIGIN,
+        credentials: true
+    }
+))
+
+const PORT = process.env.PORT || 3001;
 
 const msg = "frontend and backend connected !!";
 
