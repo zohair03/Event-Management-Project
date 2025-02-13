@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import {User} from "./models/userModel.js";
+import { User } from "./models/userModel.js";
 
 dotenv.config({ path: "./.env" });
 
@@ -15,13 +15,18 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
+app.use(express.json())
 
 const PORT = process.env.PORT || 3001;
 
 app.post("/landingPage", async (req, res) => {
-  console.log(res.body)
-  res.status(200)
+  try {
+    console.log(req.body);
+    res.status(200)
+  } catch (error) {
+    res.send("error in api");
+  }
 });
 
 mongoose
