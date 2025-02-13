@@ -1,24 +1,34 @@
 import axios from "axios";
 import "./App.css";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
   const [massage, setMassage] = useState("");
 
-  useEffect(() => {
+
+  function handleSubmit(event) {
+    event.preventDefault();
     axios
-      .get("/landingPage")
-      .then((response) => {
-        setMassage(response.data);
+      .post("http://localhost:3000/landingPage", { massage })
+      .then((res) => {
+        console.log("data sended succesfully ",res);
+        console.log(massage)
       })
-      .catch((error) => {
-        console.log("FAILED API CALL landingPage ", error);
+      .catch((err) => {
+        console.log("error in sending data to backend ", err);
       });
-  });
+  }
+
+  function handleChange(event) {
+    setMassage(event.target.value);
+  }
 
   return (
     <>
-      <p>{massage}</p>
+      <form onSubmit={handleSubmit}>
+        <input type="text" value={massage} onChange={handleChange} />
+        <button type="submit">submit</button>
+      </form>
     </>
   );
 }

@@ -8,26 +8,20 @@ dotenv.config({ path: "./.env" });
 
 const app = express();
 
-app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: "http://localhost:5173",
+  methods: "GET, POST",
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions))
 
 const PORT = process.env.PORT || 3001;
 
-const msg = "frontend and backend connected !!";
-
-app.get("/landingPage", async (req, res) => {
-  const { name, username, password, emailId } = req.body;
-
-  try {
-    const users = await User.create({ name, username, password, emailId });
-    res.send(200).json(users);
-  } catch (error) {
-    res.send(400).json(error);
-  }
+app.post("/landingPage", async (req, res) => {
+  console.log(res.body)
+  res.status(200)
 });
 
 mongoose
