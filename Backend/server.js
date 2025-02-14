@@ -2,7 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import {User} from "./models/userModel.js"
+import {router} from "./routes/userRoute.js"
+
 const app = express();
 
 dotenv.config({ path: "./.env" });
@@ -13,21 +14,12 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200,
 };
+
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use("/api/user",router)
 
 
-app.post("/landingPage", async (req, res) => {
-  try {
-    await User.create(req.body)
-    res.status(200).send(req.body)
-    // res.send(req.body);
-
-    // console.log(req.body)
-  } catch (err) {
-    res.send("failed to send data: ",err);
-  }
-});
 
 mongoose
   .connect(process.env.MONGO_URI)
