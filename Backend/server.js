@@ -2,7 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import {router} from "./routes/userRoute.js"
+import userRoute from "./routes/userRoute.js"
+import eventRoute from "./routes/eventRoute.js"
 
 const app = express();
 
@@ -17,7 +18,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use("/api/user",router)
+app.use("/api/user",userRoute)
+app.use("/api/event",eventRoute)
 
 
 

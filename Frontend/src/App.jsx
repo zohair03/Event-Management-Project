@@ -11,16 +11,23 @@ function App() {
     email: ""
   });
 
+  const [newEvent, setNewEvent] = useState({
+    name:"",
+    location:"",
+    description:""
+  })
+
+
   function handleSubmit(event) {
     event.preventDefault();
 
     // console.log({newUser})
 
     axios
-      .post("http://localhost:3000/landingPage", newUser)
+      .post("http://localhost:3000/api/event/createEvent", newEvent)
       .then((res) => {
-        console.log("data sended succesfully ", newUser);
-        setNewUser({ name: "", userName: "", password: "", email: "" });
+        console.log("data sended succesfully ", newEvent);
+        setNewEvent({ name: "", location: "", description: ""});
       })
       .catch((err) => {
         console.log("error in sending data to backend ", err);
@@ -29,8 +36,8 @@ function App() {
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setNewUser({
-      ...newUser,
+    setNewEvent({
+      ...newEvent,
       [name]: value,
     });
   }
@@ -43,34 +50,25 @@ function App() {
           <input
             type="text"
             name="name"
-            value={newUser.name}
+            value={newEvent.name}
             onChange={handleChange}
           />
         </label>
         <label>
-          User Name
+          location
           <input
             type="text"
-            name="userName"
-            value={newUser.userName}
+            name="location"
+            value={newEvent.location}
             onChange={handleChange}
           />
         </label>
         <label>
-          Password
+          description
           <input
             type="text"
-            name="password"
-            value={newUser.password}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Email
-          <input
-            type="text"
-            name="email"
-            value={newUser.email}
+            name="description"
+            value={newEvent.description}
             onChange={handleChange}
           />
         </label>

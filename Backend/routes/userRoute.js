@@ -23,4 +23,4 @@ router.get("/login",async (req, res) => {
   }
 })
 
-export {router}
+export default router;
