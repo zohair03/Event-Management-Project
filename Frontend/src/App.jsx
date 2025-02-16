@@ -1,6 +1,12 @@
 import axios from "axios";
 import "./App.css";
 import React, { useState, useEffect } from "react";
+import CreateEvent from "./components/CreateEvent";
+import Dashboard from "./components/Dashboard";
+import LandingPage from "./components/LandingPage";
+import LoginPage from "./components/LoginPage";
+import UpdateEvent from "./components/UpdateEvent";
+import {createBrowserRouter , RouterProvider} from 'react-router'
 
 function App() {
   
