@@ -6,7 +6,8 @@ import Dashboard from "./components/Dashboard";
 import LandingPage from "./components/LandingPage";
 import LoginPage from "./components/LoginPage";
 import UpdateEvent from "./components/UpdateEvent";
-import { createBrowserRouter, RouterProvider } from "react-router";
+import Navbar from "./components/Navbar";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
   const router = createBrowserRouter([
@@ -35,6 +36,7 @@ function App() {
   return (
 
     <div>
+      <Navbar/>
       <RouterProvider router={router}/>
     </div>
     
