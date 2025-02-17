@@ -13,7 +13,12 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <LandingPage />,
+      element: (
+        <div>
+          <Navbar />
+          <LandingPage />
+        </div>
+      ),
     },
     {
       path: "/loginPage",
@@ -25,7 +30,12 @@ function App() {
     },
     {
       path: "/createEvent",
-      element: <CreateEvent />,
+      element: (
+        <div>
+          <Navbar />
+          <LandingPage />
+        </div>
+      ),
     },
     {
       path: "/updateEvent",
