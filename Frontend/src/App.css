@@ -1,0 +1,35 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+
+.navbar {
+    display: flex;
+    background: antiquewhite;
+    height: 50px;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-bottom: 10px;
+}
+
+.navbar div {
+    display: flex;
+
+}
+
+.navbar div * {
+    margin: 5px;
+}
+
+.navbar .navbartext {
+    text-decoration: none;
+}
+
+.button {
+    background: cornflowerblue;
+    padding: 5px;
+    border-radius: 2rem;
+}

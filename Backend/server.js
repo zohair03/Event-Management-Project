@@ -1,9 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import mongoose from "mongoose";
-import userRoute from "./routes/userRoute.js"
-import eventRoute from "./routes/eventRoute.js"
+import { connectMongoDB } from "./connection.js";
+
+// routes
+import userRoute from "./routes/userRoute.js";
+import eventRoute from "./routes/eventRoute.js";
 
 const app = express();
 
@@ -18,18 +20,11 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use("/api/user",userRoute)
-app.use("/api/event",eventRoute)
+app.use("/api/user", userRoute);
+app.use("/api/event", eventRoute);
 
+connectMongoDB(process.env.MONGO_URI);
 
-
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`MongoDB connected & server is live at port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.log("MongoDB connection error: ", err);
-  });
+app.listen(PORT, () => {
+  console.log(`server is live at port ${PORT}`);
+});
