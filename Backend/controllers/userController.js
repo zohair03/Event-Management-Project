@@ -1,4 +1,8 @@
 import { User } from "../models/userModel.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config({path:'../.env'})
 
 async function handleGetAllUsers(req, res) {
   try {
@@ -12,8 +16,9 @@ async function handleGetAllUsers(req, res) {
 
 async function handleCreateUsers(req, res) {
   try {
+    const token = jwt.sign(req.body, process.env.ACCESS_TOKEN_SCERECT);
     await User.create(req.body);
-    res.status(200).send(req.body);
+    res.send(token);
   } catch (err) {
     res.send("failed to send data: ", err);
   }

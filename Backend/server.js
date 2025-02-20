@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+
 import { connectMongoDB } from "./connection.js";
 
 // routes
@@ -10,7 +11,9 @@ import eventRoute from "./routes/eventRoute.js";
 const app = express();
 
 dotenv.config({ path: "./.env" });
+
 const PORT = process.env.PORT || 3001;
+
 const corsOptions = {
   origin: "http://localhost:5173",
   methods: "GET, POST",
@@ -20,6 +23,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
 app.use("/api/user", userRoute);
 app.use("/api/event", eventRoute);
 

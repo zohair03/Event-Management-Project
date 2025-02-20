@@ -8,6 +8,7 @@ const Navbar = () => {
       <div>
         <Link to="/createEvent" className="navbartext button" > Create your own event</Link>
         <Link to="/loginPage" className="navbartext button" > Login</Link>
+        <span>User</span>
       </div>
     </div>
   );
