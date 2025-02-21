@@ -1,11 +1,14 @@
 import express from "express";
-import { handleGetAllUsers, handleCreateUsers } from "../controllers/userController.js";
+import {
+  handleLoginUsers,
+  handleCreateUsers,
+} from "../controllers/userController.js";
+import { jwtAuthMiddleware } from "../middleware/auth.js";
 
-const router = express.Router()
-
+const router = express.Router();
 
 router.post("/signUp", handleCreateUsers);
 
-router.get("/login",handleGetAllUsers)
+router.get("/login", jwtAuthMiddleware, handleLoginUsers);
 
 export default router;

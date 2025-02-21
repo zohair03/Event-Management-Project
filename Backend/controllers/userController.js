@@ -1,12 +1,11 @@
+import { generateToken } from "../middleware/auth.js";
 import { User } from "../models/userModel.js";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+dotenv.config({ path: "../.env" });
 
-dotenv.config({path:'../.env'})
-
-async function handleGetAllUsers(req, res) {
+async function handleLoginUsers(req, res) {
   try {
-    const allUsers = await User.find();
+    const allUsers = await User.find({});
     res.status(201).json(allUsers);
   } catch (err) {
     console.log("error in login api: ", err);
@@ -16,12 +15,12 @@ async function handleGetAllUsers(req, res) {
 
 async function handleCreateUsers(req, res) {
   try {
-    const token = jwt.sign(req.body, process.env.ACCESS_TOKEN_SCERECT);
+    const token = generateToken(req.body);
     await User.create(req.body);
-    res.send(token);
+    res.sendStatus(201).json({token});
   } catch (err) {
-    res.send("failed to send data: ", err);
+    res.status(400).send(err);
   }
 }
 
-export { handleGetAllUsers, handleCreateUsers };
+export { handleLoginUsers, handleCreateUsers };
