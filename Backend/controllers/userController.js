@@ -9,7 +9,7 @@ async function handleLoginUsers(req, res) {
     res.status(201).json(allUsers);
   } catch (err) {
     console.log("error in login api: ", err);
-    res.status(500).send("failed to get data: ", err);
+    res.status(400).send("failed to get data: ", err);
   }
 }
 
@@ -17,9 +17,9 @@ async function handleCreateUsers(req, res) {
   try {
     const token = generateToken(req.body);
     await User.create(req.body);
-    res.sendStatus(201).json({token});
+    res.json({ key: token, data: req.body });
   } catch (err) {
-    res.status(400).send(err);
+    res.status(400).json(err);
   }
 }
 
