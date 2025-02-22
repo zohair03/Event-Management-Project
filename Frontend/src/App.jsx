@@ -12,24 +12,33 @@ import NotFound from "./components/NotFound";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
-
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
         <div>
-          <Navbar />
+          <Navbar user={} />
           <LandingPage />
         </div>
       ),
     },
     {
       path: "/loginPage",
-      element: <LoginPage />,
+      element: (
+        <div>
+          <Navbar />
+          <LoginPage />
+        </div>
+      ),
     },
     {
       path: "/signUpPage",
-      element: <SignUpPage />,
+      element: (
+        <div>
+          <Navbar />
+          <SignUpPage />
+        </div>
+      ),
     },
     {
       path: "/dashboard",
@@ -54,9 +63,9 @@ function App() {
       element: <UpdateEvent />,
     },
     {
-      path:"*",
-      element:<NotFound/>
-    }
+      path: "*",
+      element: <NotFound />,
+    },
   ]);
 
   return (

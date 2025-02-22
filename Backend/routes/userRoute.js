@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post("/signUp", handleCreateUsers);
 
-router.get("/login", jwtAuthMiddleware, handleLoginUsers);
+router.post("/login", handleLoginUsers);
 
 export default router;

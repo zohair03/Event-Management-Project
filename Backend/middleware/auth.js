@@ -8,8 +8,13 @@ function generateToken(payload) {
   return jwt.sign(payload, process.env.ACCESS_TOKEN_SCERECT);
 }
 
+
+
+
+
 function jwtAuthMiddleware(req, res, next) {
-  const token = req.header.authorization.split(" ")[1];
+
+  const token = req.headers.authorization.split(" ")[1];
 
   if (!token)
     return res.sendStatus(403).json({ Response: "Token not available" });
