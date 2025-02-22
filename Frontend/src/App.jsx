@@ -12,12 +12,17 @@ import NotFound from "./components/NotFound";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
+  const [userData,setUserData] = useState({});
+
+
+
+
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
         <div>
-          <Navbar user={} />
+          <Navbar />
           <LandingPage />
         </div>
       ),

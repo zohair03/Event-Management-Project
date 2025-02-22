@@ -1,14 +1,10 @@
 import jwt from "jsonwebtoken";
 
 
-
-
 // generate jwt tokens
 function generateToken(payload) {
-  return jwt.sign(payload, process.env.ACCESS_TOKEN_SCERECT);
+  return jwt.sign({payload}, process.env.ACCESS_TOKEN_SCERECT);
 }
-
-
 
 
 

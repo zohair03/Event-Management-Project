@@ -6,7 +6,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-
+  
   async function handleSubmit(e) {
     e.preventDefault();
     console.log("handleSubmit check: ",{email:email,password:password});
@@ -24,7 +24,6 @@ const LoginPage = () => {
         }
       )
       .then((res) => {
-        console.log("user loged in :", res);
         setUser(res.data.userData);
       })
       .catch((err) => {
@@ -64,7 +63,7 @@ const LoginPage = () => {
 
         <button type="Submit">Login</button>
       </form>
-      {user && <Navigate to={"/"} />}
+      {user && <Navigate to={"/dashboard"} />}
     </div>
   );
 };
