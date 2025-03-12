@@ -11,8 +11,15 @@ async function handleLoginUsers(req, res) {
   try {
     const { email, password } = req.body;
     const userData = await User.findOne({ email: email, password: password });
-    const token = generateToken(userData);
-    res.json({userData}).cookie("uuid",token);
+    const payload = {
+      _id:userData._id,
+      name: userData.name,
+      userName: userData.userName,
+      email:userData.email
+    }
+    const token = generateToken(payload);
+    console.log(token)
+    res.json({user: userData, token: token})
   } catch (err) {
     console.log("error in login api: ", err);
     res.status(400).json({ "failed to get data: ": err });

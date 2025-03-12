@@ -11,6 +11,8 @@ import SignUpPage from "./components/SignUpPage";
 import NotFound from "./components/NotFound";
 // import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { BrowserRouter, Routes, Route } from "react-router";
+import ProtectedRoutes from "./components/ProtectedRoutes";
+import {Roles} from "./roles.js";
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -103,30 +105,29 @@ function App() {
             }
           />
 
+          {/* protected routes */}
+          <Route element={<ProtectedRoutes roles={[Roles.USER]} />}>
+            <Route
+              path="/createEvent"
+              element={
+                <>
+                  <Navbar />
+                  <CreateEvent />
+                </>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <>
+                  <Navbar />
+                  <Dashboard />
+                </>
+              }
+            />
+            <Route path="/updateEvent" element={<UpdateEvent />} />
+          </Route>
 
-
-          <Route
-            path="/createEvent"
-            element={
-              <>
-                <Navbar />
-                <CreateEvent />
-              </>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <>
-                <Navbar />
-                <Dashboard />
-              </>
-            }
-          />
-          <Route path="/updateEvent" element={<UpdateEvent />} />
-
-
-          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

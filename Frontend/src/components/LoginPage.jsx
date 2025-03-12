@@ -9,7 +9,7 @@ const LoginPage = () => {
   
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("handleSubmit check: ",{email:email,password:password});
+   
     await axios
       .post(
         "http://localhost:3000/api/user/login",
@@ -24,7 +24,7 @@ const LoginPage = () => {
         }
       )
       .then((res) => {
-        setUser(res.data.userData);
+        setUser(res.data.user);
       })
       .catch((err) => {
         console.log("error in login user ", err);
@@ -63,7 +63,7 @@ const LoginPage = () => {
 
         <button type="Submit">Login</button>
       </form>
-      {user && <Navigate to={"/dashboard"} />}
+      {user ? <Navigate to={"/dashboard"} /> : null}
     </div>
   );
 };
