@@ -1,38 +1,35 @@
-import express from "express";
-import { generateToken } from "../middleware/auth.js";
 import { User } from "../models/userModel.js";
-import dotenv from "dotenv";
-dotenv.config({ path: "../.env" });
 
-const app = express();
-app.use(express.json());
-
-async function handleLoginUsers(req, res) {
+const handleGetAllUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const userData = await User.findOne({ email: email, password: password });
-    const payload = {
-      _id:userData._id,
-      name: userData.name,
-      userName: userData.userName,
-      email:userData.email
+    const allUser = await User.find();
+    res.status(200).json({allUser});
+  } catch (error) {
+    res.status(500).json({massage: error})
+  }
+};
+
+const handleDeleteUser = async (req, res) => {
+  try {
+    const {targetedEmail} = req.body;
+    console.log(targetedEmail)
+
+    const targetedUser = await User.findOne({ _id: targetedEmail });
+    
+    if(!targetedUser){
+      return res.status(404).json({ massage: "Not found targeted email in database" });
     }
-    const token = generateToken(payload);
-    console.log(token)
-    res.json({user: userData, token: token})
-  } catch (err) {
-    console.log("error in login api: ", err);
-    res.status(400).json({ "failed to get data: ": err });
-  }
-}
 
-async function handleCreateUsers(req, res) {
-  try {
-    await User.create(req.body);
-    res.json({ msg: "user created in data !!" });
-  } catch (err) {
-    res.status(400).json({ err });
-  }
-}
+    const isDeleted = await User.deleteOne({ _id: targetedUser._id });
+    
+    if(!isDeleted){
+      return res.status(404).json({ massage:` Error in deleting record for ${targetedUser._id}`});
+    }
 
-export { handleLoginUsers, handleCreateUsers };
+    return res.status(200).json({massage: `Removed ${targetedEmail} from database`});
+  } catch (error) {
+    res.status(500).json({ massage: error });
+  }
+};
+
+export {handleGetAllUser, handleDeleteUser}

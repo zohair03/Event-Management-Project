@@ -1,11 +1,13 @@
 import express from "express";
+import {handleLogin,handleSignUp} from "../controllers/authController.js";
 
-import { jwtAuthMiddleware } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/", jwtAuthMiddleware, (req, res) => {
-  res.json({ msg: "authentication successful!!", data: req.user });
-});
+// sign up user
+router.post("/signUp", handleSignUp);
+
+// login user
+router.post("/login", handleLogin);
 
 export default router;

@@ -1,16 +1,14 @@
-import express from "express";
-import {
-  handleLoginUsers,
-  handleCreateUsers,
-} from "../controllers/userController.js";
-import { jwtAuthMiddleware } from "../middleware/auth.js";
+import express from "express"
+import { jwtAuthMiddleware } from "../middleware/auth.js"
+import {handleGetAllUser, handleDeleteUser} from "../controllers/userController.js" 
+import { authorizedRoles } from "../middleware/roles.js";
 
-const router = express.Router();
+const router = express.Router()
 
-// sign up user
-router.post("/signUp", handleCreateUsers);
+// get all users
+router.get("/allUsers", jwtAuthMiddleware, authorizedRoles("admin"), handleGetAllUser)
 
-// login user
-router.post("/login", handleLoginUsers);
+// delete a users
+router.delete("/deleteUser", jwtAuthMiddleware, authorizedRoles("admin"), handleDeleteUser)
 
-export default router;
+export default router

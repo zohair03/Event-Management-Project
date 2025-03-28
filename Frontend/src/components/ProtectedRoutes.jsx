@@ -1,24 +1,21 @@
-import React from 'react'
-import LoginPage from './LoginPage';
-import { Outlet, Navigate, } from 'react-router'
+import React from "react";
+import { Outlet, Navigate } from "react-router";
 
-const ProtectedRoutes = ({roles}) => {
+const ProtectedRoutes = ({ allowedRoles, isAuthenticated, role }) => {
+  if (!isAuthenticated) {
+    return <Navigate to="/loginPage" />;
+  }
 
-    const isAuthenticated = true;
-    const role = 'user';
-
-    if(!isAuthenticated)
-        return <Navigate to="/loginPage" />;
-
-
-    if(!roles.includes(role))
-        return <Navigate to='/'/>
+  if (!allowedRoles.includes(role)) {
+    console.log("allowedRoles if excuted")
+    return <Navigate to="/loginPage" />;
+  }
 
   return (
     <>
-        <Outlet/>
+      <Outlet />
     </>
-  )
-}
+  );
+};
 
-export default ProtectedRoutes
+export default ProtectedRoutes;

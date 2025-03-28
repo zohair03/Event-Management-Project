@@ -3,7 +3,8 @@ import { Event } from "../models/eventModel.js";
 async function handleGetAllEvents(req, res) {
   try {
     const allEvents = await Event.find();
-    res.status(201).send(allEvents);
+    console.log(allEvents)
+    res.status(201).json({allEvents});
   } catch (err) {
     console.log("error in allEvents api: ", err);
     res.status(500).send("failed to get all event: ", err);

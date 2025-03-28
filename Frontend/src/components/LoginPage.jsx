@@ -2,17 +2,17 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
-const LoginPage = () => {
+
+const LoginPage = ({token, user}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
-  
+  const [userCredentials, setUserCredentials] = useState(null)
+
   async function handleSubmit(e) {
     e.preventDefault();
-   
     await axios
       .post(
-        "http://localhost:3000/api/user/login",
+        "http://localhost:3000/api/auth/login",
         {
           email: email,
           password: password,
@@ -24,7 +24,11 @@ const LoginPage = () => {
         }
       )
       .then((res) => {
-        setUser(res.data.user);
+        user(res.data.user);
+        console.log("user: ", res.data.user);
+        token(res.data.token);
+        console.log("token: ", res.data.token);
+        setUserCredentials({email:email,password:password})
       })
       .catch((err) => {
         console.log("error in login user ", err);
@@ -63,7 +67,7 @@ const LoginPage = () => {
 
         <button type="Submit">Login</button>
       </form>
-      {user ? <Navigate to={"/dashboard"} /> : null}
+      {userCredentials ? <Navigate to="/dashboard"/> : null}
     </div>
   );
 };

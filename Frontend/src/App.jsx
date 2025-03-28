@@ -12,10 +12,18 @@ import NotFound from "./components/NotFound";
 // import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { BrowserRouter, Routes, Route } from "react-router";
 import ProtectedRoutes from "./components/ProtectedRoutes";
-import {Roles} from "./roles.js";
+;
 
 function App() {
-  const [userData, setUserData] = useState({});
+  const [token, setToken] = useState(null);
+  const [user, setUser] = useState({
+    _id: '',
+    name: '',
+    userName: '',
+    email: '',
+    role: ''
+  });
+
 
   // const router = createBrowserRouter([
   //   {
@@ -73,6 +81,21 @@ function App() {
   //   },
   // ]);
 
+
+  function jwtAuthToken(data){
+    setToken(data)
+    console.log(token)
+  }
+  function userCredentials(data){
+    setUser(data)
+    console.log(user)
+  }
+
+  function  checkAuthentication(){
+    return true;
+  }
+
+
   return (
     <>
       <BrowserRouter>
@@ -81,7 +104,7 @@ function App() {
             path="/"
             element={
               <>
-                <Navbar />
+                <Navbar profile={user.name} />
                 <LandingPage />
               </>
             }
@@ -90,8 +113,8 @@ function App() {
             path="/loginPage"
             element={
               <>
-                <Navbar />
-                <LoginPage />
+                <Navbar profile={user.name} />
+                <LoginPage token={jwtAuthToken} user={userCredentials} />
               </>
             }
           />
@@ -99,20 +122,28 @@ function App() {
             path="/signUpPage"
             element={
               <>
-                <Navbar />
+                <Navbar profile={user.name} />
                 <SignUpPage />
               </>
             }
           />
 
           {/* protected routes */}
-          <Route element={<ProtectedRoutes roles={[Roles.USER]} />}>
+          <Route
+            element={
+              <ProtectedRoutes
+                allowedRoles={["admin","user"]}
+                isAuthenticated={checkAuthentication}
+                role={user.role}
+              />
+            }
+          >
             <Route
               path="/createEvent"
               element={
                 <>
-                  <Navbar />
-                  <CreateEvent />
+                  <Navbar profile={user.name} />
+                  <CreateEvent token={token} />
                 </>
               }
             />
@@ -120,12 +151,15 @@ function App() {
               path="/dashboard"
               element={
                 <>
-                  <Navbar />
-                  <Dashboard />
+                  <Navbar profile={user.name} />
+                  <Dashboard token={token} />
                 </>
               }
             />
-            <Route path="/updateEvent" element={<UpdateEvent />} />
+            <Route
+              path="/updateEvent"
+              element={<UpdateEvent token={token} />}
+            />
           </Route>
 
           <Route path="*" element={<NotFound />} />

@@ -2,10 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { connectMongoDB } from "./connection.js";
-
-// routes
-import userRoute from "./routes/userRoute.js";
+import auth from "./routes/authRoute.js";
 import eventRoute from "./routes/eventRoute.js";
+import userRoute from "./routes/userRoute.js";
 
 const app = express();
 
@@ -23,7 +22,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use("/api/user", userRoute);
+app.use("/api/auth", auth);
+app.use("/api/user",userRoute);
 app.use("/api/event", eventRoute);
 
 connectMongoDB(process.env.MONGO_URI);

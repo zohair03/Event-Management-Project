@@ -12,7 +12,7 @@ const SignUpPage = () => {
   async function handleSubmit(event) {
     event.preventDefault();
     await axios
-      .post("http://localhost:3000/api/user/signUp", {
+      .post("http://localhost:3000/api/auth/signUp", {
         name: name,
         userName: username,
         password: password,
