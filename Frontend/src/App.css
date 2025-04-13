@@ -13,6 +13,7 @@ body {
     padding-left: 100px;
     padding-right: 100px;
     margin-bottom: 10px;
+
 }
 
 .navbar div {
@@ -32,6 +33,7 @@ body {
     background: cornflowerblue;
     padding: 5px;
     border-radius: 2rem;
+    text-decoration: none;
 }
 
 .form {

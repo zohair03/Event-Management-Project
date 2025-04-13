@@ -11,7 +11,7 @@ import { authorizedRoles } from "../middleware/roles.js";
 
 const router = express.Router();
 
-// Find all events
+// get all events
 router.get("/allEvents",jwtAuthMiddleware, authorizedRoles("admin","user"), handleGetAllEvents);
 
 // Create new event

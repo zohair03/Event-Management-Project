@@ -1,28 +1,39 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-const Dashboard = ({ token }) => {
-  const [event, setEvent] = useState({});
+import useAuth from "../Hooks/useAuth.jsx";
+import Event from "./Event.jsx";
+const Dashboard = () => {
+  const { auth } = useAuth();
+  const [events, setEvents] = useState();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/event/allEvents", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        console.log("all events: ", res.data.allEvents);
-        setEvent(res.data.allEvents);
-      });
-  },[]);
+    const getEvents = async () => {
+      const response = await axios.get(
+        "http://localhost:3000/api/event/allEvents",
+        {
+          headers: { Authorization: `Bearer ${auth.accessToken}` },
+        }
+      );
+      setEvents(response.data.allEvents);
+    };
+    getEvents();
+  }, []);
 
   return (
     <>
       <div>
-        <div className="card">
-          <h1>event name</h1>
-          <p>location</p>
-          <p>discription</p>
-        </div>
+        {events?.length ? (
+          events.map((event, i) => (
+            <Event
+              key={i}
+              name={event.name}
+              location={event.location}
+              description={event.description}
+            />
+          ))
+        ) : (
+          <p>No events on going</p>
+        )}
       </div>
     </>
   );

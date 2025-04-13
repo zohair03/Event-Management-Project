@@ -32,4 +32,6 @@ const handleDeleteUser = async (req, res) => {
   }
 };
 
+
+
 export {handleGetAllUser, handleDeleteUser}

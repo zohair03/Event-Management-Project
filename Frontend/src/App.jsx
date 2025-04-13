@@ -1,175 +1,46 @@
-import axios from "axios";
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React,{useEffect} from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import CreateEvent from "./components/CreateEvent";
 import Dashboard from "./components/Dashboard";
 import LandingPage from "./components/LandingPage";
-import LoginPage from "./components/LoginPage";
+import LoginPage from "./components/LoginPage.jsx";
 import UpdateEvent from "./components/UpdateEvent";
-import Navbar from "./components/Navbar";
 import SignUpPage from "./components/SignUpPage";
 import NotFound from "./components/NotFound";
-// import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { BrowserRouter, Routes, Route } from "react-router";
-import ProtectedRoutes from "./components/ProtectedRoutes";
-;
+import Layout from "./components/Layout.jsx";
+import RequiredAuth from "./components/RequireAuth.jsx";
+import AllUsers from "./components/AllUsers.jsx";
+import UnAuthorized from "./components/UnAuthorized.jsx";
+import useAuth from "./Hooks/useAuth.jsx";
 
 function App() {
-  const [token, setToken] = useState(null);
-  const [user, setUser] = useState({
-    _id: '',
-    name: '',
-    userName: '',
-    email: '',
-    role: ''
-  });
-
-
-  // const router = createBrowserRouter([
-  //   {
-  //     path: "/",
-  //     element: (
-  //       <div>
-  //         <Navbar />
-  //         <LandingPage />
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     path: "/loginPage",
-  //     element: (
-  //       <div>
-  //         <Navbar />
-  //         <LoginPage />
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     path: "/signUpPage",
-  //     element: (
-  //       <div>
-  //         <Navbar />
-  //         <SignUpPage />
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     path: "/dashboard",
-  //     element: (
-  //       <div>
-  //         <Navbar />
-  //         <Dashboard />
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     path: "/createEvent",
-  //     element: (
-  //       <div>
-  //         <Navbar />
-  //         <CreateEvent />
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     path: "/updateEvent",
-  //     element: <UpdateEvent />,
-  //   },
-  //   {
-  //     path: "*",
-  //     element: <NotFound />,
-  //   },
-  // ]);
-
-
-  function jwtAuthToken(data){
-    setToken(data)
-    console.log(token)
-  }
-  function userCredentials(data){
-    setUser(data)
-    console.log(user)
-  }
-
-  function  checkAuthentication(){
-    return true;
-  }
-
+  const {setAuth} = useAuth()
+  const location = useLocation()  
 
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Navbar profile={user.name} />
-                <LandingPage />
-              </>
-            }
-          />
-          <Route
-            path="/loginPage"
-            element={
-              <>
-                <Navbar profile={user.name} />
-                <LoginPage token={jwtAuthToken} user={userCredentials} />
-              </>
-            }
-          />
-          <Route
-            path="/signUpPage"
-            element={
-              <>
-                <Navbar profile={user.name} />
-                <SignUpPage />
-              </>
-            }
-          />
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signUp" element={<SignUpPage />} />
+        <Route path="/unAuthorized" element={<UnAuthorized />} />
 
-          {/* protected routes */}
-          <Route
-            element={
-              <ProtectedRoutes
-                allowedRoles={["admin","user"]}
-                isAuthenticated={checkAuthentication}
-                role={user.role}
-              />
-            }
-          >
-            <Route
-              path="/createEvent"
-              element={
-                <>
-                  <Navbar profile={user.name} />
-                  <CreateEvent token={token} />
-                </>
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                <>
-                  <Navbar profile={user.name} />
-                  <Dashboard token={token} />
-                </>
-              }
-            />
-            <Route
-              path="/updateEvent"
-              element={<UpdateEvent token={token} />}
-            />
-          </Route>
+        {/* user & admin */}
+        <Route element={<RequiredAuth allowedRoles={["admin", "user"]} />}>
+          <Route path="/createEvent" element={<CreateEvent />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/updateEvent" element={<UpdateEvent />} />
+        </Route>
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+        {/* Only admin */}
+        <Route element={<RequiredAuth allowedRoles={["admin"]} />}>
+          <Route path="/allUsers" element={<AllUsers />} />
+        </Route>
 
-    // <div>
-    //   <RouterProvider router={router} />
-    // </div>
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 }
 

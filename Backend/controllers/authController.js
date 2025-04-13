@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import { generateToken } from "../middleware/auth.js";
 import { User } from "../models/userModel.js";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config({ path: "../.env" });
 
@@ -13,13 +14,13 @@ async function handleLogin(req, res) {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email: email });
-    if(!user){
-      return res.status(404).json({massage:`user ${email} not found`});
+    if (!user) {
+      return res.status(404).json({ massage: `user ${email} not found` });
     }
 
-    const isMatch = bcrypt.compare(password, user.password);
-    if(!isMatch){
-      return res.status(400).json({message:"Incorrect password try again"})
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Incorrect password try again" });
     }
 
     const payload = {
@@ -29,13 +30,13 @@ async function handleLogin(req, res) {
       email: user.email,
       role: user.role,
     };
-    const token = generateToken(payload);
-    console.log(token);
+    const accessToken = generateToken(payload);
+    console.log("token: ", accessToken);
 
-    res.json({ user: payload, token: token });
+    res.json({ user: payload, accessToken: accessToken });
   } catch (err) {
     console.log("error in login api: ", err);
-    res.status(500).json({err});
+    res.status(500).json({ err });
   }
 }
 
@@ -56,4 +57,35 @@ async function handleSignUp(req, res) {
   }
 }
 
-export { handleLogin, handleSignUp };
+async function handleRefreshToken(req, res) {
+  const refreshToken = req.body.refreshToken;
+  if (!refreshToken) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+
+  try {
+    const decodedData = jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SCERECT
+    );
+    if (!decodedData) {
+      return res.status(403).json({ message: "Invalid token" });
+    }
+
+    const payload = {
+      _id: decodedData._id,
+      name: decodedData.name,
+      userName: decodedData.userName,
+      email: decodedData.email,
+      role: decodedData.role,
+    };
+    const newAccessToken = generateToken(payload);
+
+    res.status(200).json({ accessToken: newAccessToken });
+  } catch (err) {
+    console.log("error from refresh token api:", err);
+    res.status(401).json({message:"Token expired"})
+  }
+}
+
+export { handleLogin, handleSignUp, handleRefreshToken };

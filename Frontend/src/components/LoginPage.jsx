@@ -1,17 +1,31 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../Hooks/useAuth.jsx";
 
 
-const LoginPage = ({token, user}) => {
+const LoginPage = () => {
+  const { setAuth, login } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  const emailRef = useRef();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userCredentials, setUserCredentials] = useState(null)
+  const [userCredentials, setUserCredentials] = useState(null);
+
+  useEffect(() => {
+    emailRef.current.focus();
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    await axios
-      .post(
+
+    try {
+      const response = await axios.post(
         "http://localhost:3000/api/auth/login",
         {
           email: email,
@@ -22,52 +36,46 @@ const LoginPage = ({token, user}) => {
             "Content-Type": "application/json",
           },
         }
-      )
-      .then((res) => {
-        user(res.data.user);
-        console.log("user: ", res.data.user);
-        token(res.data.token);
-        console.log("token: ", res.data.token);
-        setUserCredentials({email:email,password:password})
-      })
-      .catch((err) => {
-        console.log("error in login user ", err);
-      });
-  }
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-    if (name === "email") setEmail(value);
-    if (name === "password") setPassword(value);
+      );
+      const user = response.data.user;
+      const accessToken = response.data.accessToken;
+      login(accessToken,user)      
+      navigate(from, { replace: true });
+    } catch (err) {
+      console.log("error in login api: ", err);
+    }
   }
 
   return (
     <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmit} className="form">
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={handleChange}
-            name="email"
-          />
-        </label>
-
-        <label>
-          Password
-          <input
-            type="text"
-            value={password}
-            onChange={handleChange}
-            name="password"
-          />
-        </label>
-
+        <label htmlFor="email">Email:</label>
+        <input
+          ref={emailRef}
+          type="text"
+          value={email}
+          id="email"
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          value={password}
+          id="password"
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
         <button type="Submit">Login</button>
       </form>
-      {userCredentials ? <Navigate to="/dashboard"/> : null}
+      <p>
+        Need an account?
+        <br />
+        <Link to="/signUp" className="navbartext button">
+          SignUp
+        </Link>
+      </p>
     </div>
   );
 };

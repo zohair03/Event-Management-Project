@@ -8,11 +8,10 @@ function jwtAuthMiddleware(req, res, next) {
   if (!token) {
     return res.sendStatus(404).json({ Response: "Token not available" });
   }
-  console.log("---token check succesfull---")
+
   try {
-    const decodedData = jwt.verify(token, process.env.ACCESS_TOKEN_SCERECT);
+    const decodedData = jwt.verify(token, process.env.REFRESH_TOKEN_SCERECT);
     req.user = decodedData;
-    console.log("jwt data decoded :",req.user);
     next();
   } catch (error) {
     console.log("Invailid Token: ", error);
@@ -22,7 +21,7 @@ function jwtAuthMiddleware(req, res, next) {
 
 // generate jwt tokens
 function generateToken(payload) {
-  return jwt.sign( payload , process.env.ACCESS_TOKEN_SCERECT);
+  return jwt.sign(payload, process.env.REFRESH_TOKEN_SCERECT);
 }
 
 export { generateToken, jwtAuthMiddleware };
