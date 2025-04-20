@@ -1,6 +1,9 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import { generateToken } from "../middleware/auth.js";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from "../middleware/auth.js";
 import { User } from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -30,13 +33,21 @@ async function handleLogin(req, res) {
       email: user.email,
       role: user.role,
     };
-    const accessToken = generateToken(payload);
-    console.log("token: ", accessToken);
+    const accessToken = generateAccessToken(payload);
+    const refreshToken = generateRefreshToken(payload);
+    console.log("Access token: ", accessToken);
+    console.log("Refresh token: ", refreshToken);
 
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Strict",
+    });
+    
     res.json({ user: payload, accessToken: accessToken });
   } catch (err) {
     console.log("error in login api: ", err);
-    res.status(500).json({ err });
+    res.status(500).json({ massage: "Internal server error", err });
   }
 }
 
@@ -58,12 +69,13 @@ async function handleSignUp(req, res) {
 }
 
 async function handleRefreshToken(req, res) {
-  const refreshToken = req.body.refreshToken;
-  if (!refreshToken) {
-    return res.status(401).json({ message: "No token provided" });
-  }
-
   try {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      return res.status(401).json({ message: "No token provided" });
+    }
+
     const decodedData = jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SCERECT
@@ -79,12 +91,12 @@ async function handleRefreshToken(req, res) {
       email: decodedData.email,
       role: decodedData.role,
     };
-    const newAccessToken = generateToken(payload);
+    const newAccessToken = generateAccessToken(payload);
 
     res.status(200).json({ accessToken: newAccessToken });
   } catch (err) {
     console.log("error from refresh token api:", err);
-    res.status(401).json({message:"Token expired"})
+    res.status(500).json({ message: "Server error", error: err });
   }
 }
 

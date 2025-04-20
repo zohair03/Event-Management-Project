@@ -1,18 +1,21 @@
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
-import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+import api from "../api/axios.js";
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [user,setUser] = useState(false)
 
   async function handleSubmit(event) {
     event.preventDefault();
-    await axios
-      .post("http://localhost:3000/api/auth/signUp", {
+    await api
+      .post("/api/auth/signUp", {
         name: name,
         userName: username,
         password: password,
@@ -20,12 +23,11 @@ const SignUpPage = () => {
       })
       .then((res) => {
         console.log("User created Successful !!");
+        navigate(from, { replace: true });
       })
       .catch((err) => {
         console.log("error in creating user ", err);
       });
-
-      setUser(true)
   }
 
   function handleChange(event) {
@@ -74,7 +76,6 @@ const SignUpPage = () => {
 
         <button type="Submit">Sign Up</button>
       </form>
-      { user && <Navigate to={"/loginPage"} />}
     </div>
   );
 };

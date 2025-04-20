@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { connectMongoDB } from "./connection.js";
 import auth from "./routes/authRoute.js";
 import eventRoute from "./routes/eventRoute.js";
@@ -14,16 +15,17 @@ const PORT = process.env.PORT || 3001;
 
 const corsOptions = {
   origin: "http://localhost:5173",
-  methods: "GET, POST",
+  methods: "GET, POST, PATCH, DELETE",
   credentials: true,
   optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/auth", auth);
-app.use("/api/user",userRoute);
+app.use("/api/user", userRoute);
 app.use("/api/event", eventRoute);
 
 connectMongoDB(process.env.MONGO_URI);

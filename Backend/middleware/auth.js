@@ -2,26 +2,39 @@ import jwt from "jsonwebtoken";
 
 // check jwt tokens
 function jwtAuthMiddleware(req, res, next) {
-
-  const token = req.headers.authorization.split(' ')[1];
-
-  if (!token) {
-    return res.sendStatus(404).json({ Response: "Token not available" });
-  }
-
   try {
-    const decodedData = jwt.verify(token, process.env.REFRESH_TOKEN_SCERECT);
-    req.user = decodedData;
+    const token = req.headers.authorization.split(" ")[1];
+    if (!token) {
+      return res
+        .sendStatus(401)
+        .json({ Response: "Unauthorized, token is not available" });
+    }
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SCERECT, (err, decodedData) => {
+      if (err) {
+        res.sendStatus(403).json({ massage: "Token expired" });
+      }
+      req.user = decodedData;
+    });
+
     next();
   } catch (error) {
     console.log("Invailid Token: ", error);
-    res.sendStatus(401).json({ error: "Invailid Token" });
+    res.sendStatus(401).json({ massage: "Session expired", error: err });
   }
 }
 
 // generate jwt tokens
-function generateToken(payload) {
-  return jwt.sign(payload, process.env.REFRESH_TOKEN_SCERECT);
+function generateAccessToken(payload) {
+  return jwt.sign(payload, process.env.ACCESS_TOKEN_SCERECT, {
+    expiresIn: "15m",
+  });
 }
 
-export { generateToken, jwtAuthMiddleware };
+function generateRefreshToken(payload) {
+  return jwt.sign(payload, process.env.REFRESH_TOKEN_SCERECT, {
+    expiresIn: "7d",
+  });
+}
+
+export { generateAccessToken, generateRefreshToken, jwtAuthMiddleware };

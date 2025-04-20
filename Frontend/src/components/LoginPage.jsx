@@ -1,11 +1,10 @@
-import axios from "axios";
+import api from "../api/axios.js";
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth.jsx";
 
-
 const LoginPage = () => {
-  const { setAuth, login } = useAuth();
+  const { login } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,7 +14,6 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userCredentials, setUserCredentials] = useState(null);
 
   useEffect(() => {
     emailRef.current.focus();
@@ -23,10 +21,9 @@ const LoginPage = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+      const response = await api.post(
+        "/api/auth/login",
         {
           email: email,
           password: password,
@@ -39,7 +36,7 @@ const LoginPage = () => {
       );
       const user = response.data.user;
       const accessToken = response.data.accessToken;
-      login(accessToken,user)      
+      login(accessToken, user);
       navigate(from, { replace: true });
     } catch (err) {
       console.log("error in login api: ", err);

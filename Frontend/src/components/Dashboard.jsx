@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import useAuth from "../Hooks/useAuth.jsx";
+import { useNavigate, useLocation } from "react-router-dom";
 import Event from "./Event.jsx";
+import useApiPrivate from "../Hooks/useApiPrivate.jsx";
+
 const Dashboard = () => {
-  const { auth } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const apiPrivate = useApiPrivate();
   const [events, setEvents] = useState();
 
   useEffect(() => {
     const getEvents = async () => {
-      const response = await axios.get(
-        "http://localhost:3000/api/event/allEvents",
-        {
-          headers: { Authorization: `Bearer ${auth.accessToken}` },
-        }
-      );
-      setEvents(response.data.allEvents);
+      try {
+        const response = await apiPrivate.get("/api/event/allEvents");
+        setEvents(response.data.allEvents);
+      } catch (err) {
+        console.log("error in getting all events: ", err);
+      }
     };
     getEvents();
   }, []);
@@ -29,6 +32,8 @@ const Dashboard = () => {
               name={event.name}
               location={event.location}
               description={event.description}
+              organizer={event.organizer}
+              edit={false}
             />
           ))
         ) : (

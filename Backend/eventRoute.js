@@ -1,25 +1,18 @@
 import express from "express";
 import {
   handleGetAllEvents,
-  handleGetMyEvents,
   handleCreateEvent,
   handleUpdateEvent,
   handleGetEventbyFilter,
   handleDeleteEvent,
-} from "../controllers/eventController.js";
-import { jwtAuthMiddleware } from "../middleware/auth.js";
-import { authorizedRoles } from "../middleware/roles.js";
+} from "./controllers/eventController.js";
+import { jwtAuthMiddleware } from "./middleware/auth.js";
+import { authorizedRoles } from "./middleware/roles.js";
 
 const router = express.Router();
 
 // get all events
 router.get("/allEvents",jwtAuthMiddleware, authorizedRoles("admin","user"), handleGetAllEvents);
-
-// users own events
-router.get("/myEvents",jwtAuthMiddleware, authorizedRoles("admin","user"), handleGetMyEvents);
-
-// Search event by filter
-router.get("/SearchEventByFilter", jwtAuthMiddleware, authorizedRoles("admin","user"), handleGetEventbyFilter);
 
 // Create new event
 router.post("/createEvent", jwtAuthMiddleware, authorizedRoles("admin","user"), handleCreateEvent);
@@ -27,7 +20,15 @@ router.post("/createEvent", jwtAuthMiddleware, authorizedRoles("admin","user"), 
 // Update a event
 router.patch("/updateEvent", jwtAuthMiddleware, authorizedRoles("admin","user"), handleUpdateEvent);
 
+// Search event by filter
+router.get("/SearchEventByFilter", jwtAuthMiddleware, authorizedRoles("admin","user"), handleGetEventbyFilter);
+
 // Delete a event
-router.post("/deleteEvent",jwtAuthMiddleware, authorizedRoles("admin","user"),  handleDeleteEvent);
+router.delete("/deleteEvent", jwtAuthMiddleware, authorizedRoles("admin","user"), handleDeleteEvent);
+
+// only admin
+router.get("/adminEvent", jwtAuthMiddleware, authorizedRoles("admin"), (req,res)=>{
+  res.status(200).json({massage: "welcome admin" })
+})
 
 export default router;

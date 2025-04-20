@@ -1,6 +1,6 @@
 import "./App.css";
-import React,{useEffect} from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import CreateEvent from "./components/CreateEvent";
 import Dashboard from "./components/Dashboard";
 import LandingPage from "./components/LandingPage";
@@ -12,25 +12,26 @@ import Layout from "./components/Layout.jsx";
 import RequiredAuth from "./components/RequireAuth.jsx";
 import AllUsers from "./components/AllUsers.jsx";
 import UnAuthorized from "./components/UnAuthorized.jsx";
-import useAuth from "./Hooks/useAuth.jsx";
+import PublicRoute from "./components/PublicRoute.jsx";
+import UserEvents from "./components/UserEvents.jsx";
 
 function App() {
-  const {setAuth} = useAuth()
-  const location = useLocation()  
-
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signUp" element={<SignUpPage />} />
-        <Route path="/unAuthorized" element={<UnAuthorized />} />
+        {/* public routes */}
+        <Route element={<PublicRoute />}>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signUp" element={<SignUpPage />} />
+        </Route>
 
         {/* user & admin */}
         <Route element={<RequiredAuth allowedRoles={["admin", "user"]} />}>
-          <Route path="/createEvent" element={<CreateEvent />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/createEvent" element={<CreateEvent />} />
           <Route path="/updateEvent" element={<UpdateEvent />} />
+          <Route path="/myEvents" element={<UserEvents />} />
         </Route>
 
         {/* Only admin */}
@@ -38,6 +39,7 @@ function App() {
           <Route path="/allUsers" element={<AllUsers />} />
         </Route>
 
+        <Route path="/unAuthorized" element={<UnAuthorized />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
