@@ -2,7 +2,7 @@ import "./App.css";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import CreateEvent from "./components/CreateEvent";
-import Dashboard from "./components/Dashboard";
+import Home from "./components/Home.jsx";
 import LandingPage from "./components/LandingPage";
 import LoginPage from "./components/LoginPage.jsx";
 import UpdateEvent from "./components/UpdateEvent";
@@ -13,7 +13,8 @@ import RequiredAuth from "./components/RequireAuth.jsx";
 import AllUsers from "./components/AllUsers.jsx";
 import UnAuthorized from "./components/UnAuthorized.jsx";
 import PublicRoute from "./components/PublicRoute.jsx";
-import UserEvents from "./components/UserEvents.jsx";
+import UserEvents from "./components/Profile.jsx";
+import EventPage from "./components/EventPage.jsx";
 
 function App() {
   return (
@@ -28,10 +29,10 @@ function App() {
 
         {/* user & admin */}
         <Route element={<RequiredAuth allowedRoles={["admin", "user"]} />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/createEvent" element={<CreateEvent />} />
           <Route path="/updateEvent" element={<UpdateEvent />} />
-          <Route path="/myEvents" element={<UserEvents />} />
+          <Route path="/profile" element={<UserEvents />} />
         </Route>
 
         {/* Only admin */}
@@ -39,6 +40,7 @@ function App() {
           <Route path="/allUsers" element={<AllUsers />} />
         </Route>
 
+        <Route path="/events/:id" element={<EventPage />} />
         <Route path="/unAuthorized" element={<UnAuthorized />} />
         <Route path="*" element={<NotFound />} />
       </Route>

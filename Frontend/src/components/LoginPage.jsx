@@ -14,6 +14,7 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [resMsg, setResMsg] = useState("");
 
   useEffect(() => {
     emailRef.current.focus();
@@ -40,40 +41,44 @@ const LoginPage = () => {
       navigate(from, { replace: true });
     } catch (err) {
       console.log("error in login api: ", err);
+      setResMsg(err?.message);
     }
   }
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit} className="form">
-        <label htmlFor="email">Email:</label>
-        <input
-          ref={emailRef}
-          type="text"
-          value={email}
-          id="email"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          value={password}
-          id="password"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="Submit">Login</button>
-      </form>
-      <p>
-        Need an account?
-        <br />
-        <Link to="/signUp" className="navbartext button">
-          SignUp
-        </Link>
-      </p>
-    </div>
+    <section className="loginSection">
+      <div className="login">
+        <h1 className="loginH1">Login</h1>
+        <span className="loginMsg">{resMsg}</span>
+        <div className="loginForm">
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="email">Email</label>
+            <input
+              ref={emailRef}
+              type="text"
+              value={email}
+              id="email"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="email"
+            />
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              value={password}
+              id="password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              placeholder="password"
+            />
+            <button type="Submit" className="btn loginBtn">Login</button>
+          </form>
+          <p>
+            Need an account? <Link to="/signUp"className="signuptext">Signup</Link>
+          </p>
+        </div>
+      </div>
+    </section>
   );
 };
 

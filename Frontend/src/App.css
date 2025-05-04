@@ -1,56 +1,896 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+
 body {
+    font-family: 'Poppins', sans-serif;
+    padding: 0;
+    margin: 0;
+    /* background: url('/assets/images/homePageBanners/b7.jpg'); */
+}
+
+/* ---------------------------------- Navbar CSS ---------------------------------- */
+.navbar {
+    display: flex;
+    background-color: white;
+    height: 85px;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    margin-bottom: 2px;
+}
+
+.navbartext {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+    color: inherit;
+    text-decoration: inherit;
+    text-decoration: none;
+}
+
+.navbarLogo {
+    margin-left: 9%;
+}
+
+.navbarLogout {
+    margin-right: 9%;
+}
+
+.navbtn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 3.2rem;
+}
+
+.profilePicDiv {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profilePic {
+    width: 30px;
+    height: 30px;
+}
+
+.profilePic img {
+    width: inherit;
+    height: inherit;
+    border-radius: 1rem;
+}
+
+/* ---------------------------------- buttons CSS ---------------------------------- */
+
+.navbarButton * {
+    margin-left: 15px;
+}
+
+.button {
+
+    padding: 5px;
+
+    padding-left: 11px;
+    padding-right: 11px;
+}
+
+.btn {
+    font-family: 'Poppins', sans-serif;
+    background-color: #634CF3;
+    border: none;
+    border-radius: 9999px;
+    font-weight: 500;
+    color: white;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    white-space: nowrap;
+    height: 2.5rem;
+    text-decoration: inherit;
+
+}
+
+.btnPrice {
+    color: #16A768;
+    background-color: #DCFCE7;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    height: 1.25rem;
+}
+
+.btnGenera {
+    color: #757579;
+    background-color: #F1F1F1;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    height: 1.25rem;
+}
+
+.delBtn {
+    background-color: red;
+    margin-left: 5px;
+    text-decoration: none;
+    border: none;
+}
+
+.heroContent .btn {
+    font-size: medium;
+}
+
+/* ---------------------------------- Form CSS ---------------------------------- */
+
+.loginForm input,
+textarea {
+    padding: 1rem;
+    background-color: rgb(246 248 253);
+    border-style: none;
+    border-radius: 0.75rem;
+    margin: 0;
+    box-shadow: 4px 4px 15px lightblue inset;
+}
+
+.signupGrid input,
+textarea {
+    padding: 1rem;
+    background-color: rgb(246 248 253);
+    border-style: none;
+    border-radius: 0.75rem;
+    margin: 0;
+    box-shadow: 4px 4px 15px lightblue inset;
+}
+
+
+
+form label {
+    color: rgb(107 114 128);
+    padding: 0px;
+    margin: 0px;
+}
+
+/* ---------------------------------- Event Card CSS ---------------------------------- */
+
+.events {
+    margin-left: 9%;
+    margin-right: 9%;
+
+}
+
+.eventsDiv {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.card {
+    background: white;
+    /* backdrop-filter: blur(10px); */
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 4px -1px #999;
+    overflow: hidden;
+    width: 425px;
+    height: 438px;
+    position: relative;
+}
+
+.card:hover {
+    box-shadow: 0px 25px 50px -12px #999;
+}
+
+.cardImg {
+    border-radius: 0.75rem 0.75rem 0 0;
+    height: 50%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.cardTime {
+    padding: 0px;
+    margin: 0px;
+}
+
+.cardTitle {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px;
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 8px;
+}
+
+.cardPrice {
+    display: flex;
+}
+
+.cardM {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    transition-duration: .15s;
+    padding: 0.75rem;
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+    border-radius: .75rem;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+    top: .5rem;
+    right: .5rem;
+    position: absolute;
+}
+
+.cardM button {
+    background-color: transparent;
+    background-image: none;
+    cursor: pointer;
+    text-transform: none;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.cardDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 50%;
+    padding: 1.25rem;
+    color: black;
+}
+
+/* ---------------------------------- Hero CSS ---------------------------------- */
+
+.heroSection {
+    background: url('/assets/images/download.png') no-repeat center center;
+    background-size: cover;
+    background-color: #F6F8FD;
+    height: fit-content;
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    height: 535px;
+    margin-left: 9%;
+    margin-right: 9%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.heroContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: xx-large;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.heroContent h1 {
+    margin: 0px;
+}
+
+.heroImg {
+    width: 400px;
+
+}
+
+.heroImg img {
+    width: inherit;
+}
+
+/* ---------------------------------- details CSS ---------------------------------- */
+
+.detailSection {
+    margin-left: 9%;
+    margin-right: 9%;
+}
+
+.detailH2 {
+    font-size: 40px;
+    line-height: 48px;
+}
+
+/* ---------------------------------- login CSS ---------------------------------- */
+
+.loginSection {
+    background: url('/assets/images/download.png') no-repeat center center;
+    background-size: cover;
+    background-color: #F6F8FD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: 50%;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 100%;
+    height: 47rem;
+}
+
+.login {
+    padding: 3rem;
+    margin-bottom: 5rem;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 500px;
+    border-radius: 2rem;
+    box-shadow: 4px 4px 10px #999;
+}
+
+.loginH1 {
+    color: rgb(98 76 245);
+    font-size: 58px;
+    line-height: 74px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 500px;
+}
+
+.loginForm form {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    width: inherit;
     padding: 0;
     margin: 0;
 }
 
-
-.navbar {
-    display: flex;
-    background: antiquewhite;
-    height: 50px;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 100px;
-    padding-right: 100px;
-    margin-bottom: 10px;
-
+.loginForm p {
+    color: rgb(107 114 128);
 }
 
-.navbar div {
-    display: flex;
-
+.signuptext {
+    color: rgb(98 76 245);
 }
 
-.navbar div * {
-    margin: 5px;
+
+
+/* ---------------------------------- singup CSS ---------------------------------- */
+
+.signup {
+    margin-bottom: 0px;
 }
 
-.navbar .navbartext {
-    text-decoration: none;
-}
-
-.button {
-    background: cornflowerblue;
-    padding: 5px;
-    border-radius: 2rem;
-    text-decoration: none;
-}
-
-.form {
+.signup form {
     display: flex;
     flex-direction: column;
-    align-items: baseline;
-    margin-left: 25px;
-    margin-top: 25px;
+    gap: 1rem;
+    width: 100%;
 }
 
-.form * {
-    margin-top: 5px;
-    margin-bottom: 5px;
+.signupH1 {
+    display: flex;
+    width: 100%;
 }
 
-.card {
-    border: 2px solid black;
-    border-radius: 2rem;
-    width: fit-content;
+.signupGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+}
+
+
+
+.signupGrid div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.signupGridEmail {
+    grid-column: span 2;
+}
+
+
+/* ---------------------------------- heading section CSS ---------------------------------- */
+
+.headingSection {
+    background: url('/assets/images/download.png') no-repeat center center;
+    background-size: cover;
+    background-color: #F6F8FD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: 50%;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 100%;
+    height: 175px;
+}
+
+.headingSection div {
+    display: flex;
+    height: 50%;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-left: 9%;
+    margin-right: 9%;
+}
+
+.headingSection div button {
+    height: 54px;
+    border-radius: 9999px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    white-space: nowrap;
+}
+
+.headingSection div h1 {
+    margin: 0px;
+    font-size: 36px;
+    line-height: 44px;
+    font-weight: 700;
+}
+
+/* ---------------------------------- create CSS ---------------------------------- */
+.create {
+    margin-left: 9%;
+    margin-right: 9%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+.createGrid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.create form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.create button {
+    height: 54px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.createGrid input,
+textarea {
+    padding: 18px;
+    background-color: rgb(246 248 253);
+    border-style: none;
+    border-radius: 3rem;
+    margin: 0;
+    box-shadow: 4px 4px 15px lightblue inset;
+}
+
+.description {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    min-height: 80px;
+    border-radius: 1rem;
+    resize: vertical;
+}
+
+
+
+.CreateGridLocation {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    grid-column: span 2;
+}
+
+.CreateGridLocation input {
+    width: 100%;
+}
+
+.createGridDate {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.createGridDate input {
+    width: 100%;
+}
+
+.createGridDate img {
+    filter: brightness(0) saturate(100%) invert(47%) sepia(0) saturate(217%) hue-rotate(32deg) brightness(98%) contrast(92%);
+}
+
+#createPriceDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+#createPriceDiv div {
+    display: flex;
+    align-items: center;
+}
+
+.fristDiv {
+    width: 100%;
+}
+
+#freeTicket {
+    width: 6rem;
+}
+
+.createPriceInput {
+    width: 100%;
+}
+
+#checkbox {}
+
+.dropbox {
+    width: 100%;
+}
+
+.dropbox div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: .75rem;
+    overflow: hidden;
+    cursor: pointer;
+    height: 18rem;
+}
+
+
+/* ---------------------------------- create CSS ---------------------------------- */
+
+.tickets {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 80rem;
+    text-align: center;
+    border-radius: 14px;
+    gap: .75rem;
+    min-height: 200px;
+    margin-left: 9%;
+    margin-right: 9%;
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+}
+
+.ticketsH1 {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 36px;
+    margin: 0;
+}
+
+.ticketsH2 {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    margin: 0;
+}
+
+/* ---------------------------------- create CSS ---------------------------------- */
+
+.allUsers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    margin-left: 9%;
+    margin-right: 9%;
+}
+
+.userCard {
+    padding: 1rem;
+}
+
+/* ---------------------------------- eventPage CSS ---------------------------------- */
+
+.eventPageSection {
+    background: url('/assets/images/download.png') no-repeat center center;
+    background-size: cover;
+    background-color: #F6F8FD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: 50%;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 100%;
+    height: fit-content;
+}
+
+.eventPageDetails {
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem;
+    gap: 2rem;
+}
+
+.eventPageTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0px;
+    margin: 0px;
+}
+
+.eventPageTitle h2 {
+    font-size: 40px;
+    line-height: 48px;
+    font-weight: 700;
+    margin: 0px;
+    padding: 0px;
+}
+
+.eventPageTitleDiv {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: .75rem;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPageTitleDiv div {
+    display: flex;
+    gap: .75rem;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPageTitleDiv p {
+    margin-top: 0;
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 500;
+    margin-left: .5rem;
+    /* padding: 0; */
+    margin: 0;
+}
+
+.eventPageTicket {
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPageTicket p {
+    padding: .5rem;
+    margin: 0px;
+    color: rgb(248 113 113);
+}
+
+.eventPagetimeloc {
+    gap: 1.25rem;
+    flex-direction: column;
+    display: flex;
+    padding: 0px;
+    margin: 0px;
+}
+
+.eventPagetime {
+    display: flex;
+    gap: .75rem;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPagetime div {
+    display: flex;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPagetime div p {
+    padding: 0px;
+    margin: 0px;
+}
+
+.eventPageloc {
+    display: flex;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    gap: .75rem;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPageloc p {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPageDic {
+    gap: .5rem;
+    flex-direction: column;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPageDic .fristP {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 700;
+    color: rgb(84 84 84);
+    margin: 0px;
+    padding: 0px;
+}
+
+.sP {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.tP {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    text-decoration-line: underline;
+    --tw-text-opacity: 1;
+    color: rgb(98 76 245 / var(--tw-text-opacity));
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+}
+
+.eventPage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+
+    margin-left: 9%;
+    margin-right: 9%;
+}
+
+.eventPageBanner {
+    width: 100%;
+    height: 500px;
+}
+
+.eventPageBanner img {
+    /* background-size: cover; */
+    width: inherit;
+    height: inherit;
+}
+
+/* ---------------------------------- HomePage CSS ---------------------------------- */
+.homePageSection {
+    width: 100%;
+    height: 500px;
+}
+
+.homePageBanner {
+    width: 100%;
+    height: inherit;
+}
+
+.homePageBanner img {
+    height: inherit;
+}
+
+.crowdBackground {
+    /* background: url('/assets/images/homePageBanners/crowdimg.png'), url('/assets/images/homePageBanners/b7.jpg'), url('/assets/images/homePageBanners/d4.jpg'); */
+    background: url('/assets/images/download.png');
+    background-color: #F6F8FD;
+    background-repeat: no-repeat;
+    background-size: contain, contain, cover;
+    background-position: bottom, top, top;
+    background-attachment: fixed, scroll;
+}
+
+/* ---------------------------------- Footer CSS ---------------------------------- */
+
+footer {
+    /* border-top: 1px solid black; */
+    box-shadow: -1px -5px 12px 0px rgba(0, 0, 0, 0.15);
+    padding: 0px;
+    margin: 0px;
+}
+
+.footerDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 80rem;
+    padding: 1.25rem;
+    text-align: center;
+    gap: 1rem;
+}
+
+/* ---------------------------------- trending CSS ---------------------------------- */
+
+
+.bannerC {
+    padding-top: 3rem;
+    margin-left: 9%;
+    margin-right: 9%;
+}
+
+.bannerCdiv img {
+    border-radius: 0.75rem;
+    height: 500px;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* .slick-slide>div {
+    margin: 0 10px;
+} */
+
+/* .banner-carousel {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 1rem;
+    box-sizing: border-box;
+    min-height: 300px;
+}
+
+.banner-carousel img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.bannerSection .container {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: auto;
+}  */
+
+.EventlyLogo {
+    display: flex;
+    align-items: center;
+    gap: 7px;
 }

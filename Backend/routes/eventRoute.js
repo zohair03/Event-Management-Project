@@ -13,7 +13,7 @@ import { authorizedRoles } from "../middleware/roles.js";
 const router = express.Router();
 
 // get all events
-router.get("/allEvents",jwtAuthMiddleware, authorizedRoles("admin","user"), handleGetAllEvents);
+router.get("/allEvents", handleGetAllEvents);
 
 // users own events
 router.get("/myEvents",jwtAuthMiddleware, authorizedRoles("admin","user"), handleGetMyEvents);

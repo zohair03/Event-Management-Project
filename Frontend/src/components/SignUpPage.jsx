@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import api from "../api/axios.js";
 
 const SignUpPage = () => {
@@ -8,6 +8,7 @@ const SignUpPage = () => {
   const from = location.state?.from?.pathname || "/";
 
   const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -39,44 +40,75 @@ const SignUpPage = () => {
   }
 
   return (
-    <div>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit} className="form">
-        <label>
-          Name
-          <input type="text" value={name} onChange={handleChange} name="name" />
-        </label>
-        <label>
-          User Name
-          <input
-            type="text"
-            value={username}
-            onChange={handleChange}
-            name="username"
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="text"
-            value={password}
-            onChange={handleChange}
-            name="password"
-          />
-        </label>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={handleChange}
-            name="email"
-          />
-        </label>
+    <section className="loginSection">
+      <div className="login signup ">
+        <div className="signupH1">
+          <h1 className="loginH1">SignUp</h1>
+        </div>
 
-        <button type="Submit">Sign Up</button>
-      </form>
-    </div>
+        <form onSubmit={handleSubmit} className="">
+          <div className="signupGrid">
+            <div>
+              <label>Name</label>
+              <input
+                placeholder="name"
+                type="text"
+                value={name}
+                onChange={handleChange}
+                name="name"
+              />
+            </div>
+            <div>
+              <label>Last name</label>
+              <input
+                placeholder="last name"
+                type="text"
+                value={lastName}
+                onChange={handleChange}
+                name="lastName"
+              />
+            </div>
+            <div>
+              <label>User Name</label>
+              <input
+                placeholder="user name"
+                type="text"
+                value={username}
+                onChange={handleChange}
+                name="username"
+              />
+            </div>
+            <div>
+              <label>Password</label>
+              <input
+                placeholder="******"
+                type="text"
+                value={password}
+                onChange={handleChange}
+                name="password"
+              />
+            </div>
+            <div className="signupGridEmail">
+              <label>Email</label>
+              <input
+                placeholder="email"
+                type="text"
+                value={email}
+                onChange={handleChange}
+                name="email"
+              />
+            </div>
+            <input type="file" className="signupGridEmail" />
+          </div>
+
+          <button type="Submit" className="btn">
+            Sign Up
+          </button>
+        </form>
+
+        <p className="">Have an account !! <Link to="/login"className="signuptext">Login</Link></p>
+      </div>
+    </section>
   );
 };
 

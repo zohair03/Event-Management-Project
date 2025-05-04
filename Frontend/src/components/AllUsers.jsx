@@ -25,22 +25,30 @@ const AllUsers = () => {
 
   return (
     <>
-      <div>
-        {users?.length ? (
-          users.map((user, i) => (
-            <User
-              key={i}
-              id={user._id}
-              name={user.name}
-              email={user.email}
-              userName={user.userName}
-              role={user.role}
-            />
-          ))
-        ) : (
-          <p>No users</p>
-        )}
-      </div>
+      <section className="headingSection">
+        <div>
+          <h1>All Users</h1>
+        </div>
+      </section>
+
+      <section style={{marginTop:"40px"}}>
+        <div className="allUsers">
+          {users?.length ? (
+            users.map((user, i) => (
+              <User
+                key={i}
+                id={user._id}
+                name={user.name}
+                userName={user.userName}
+                role={user.role}
+                email={user.email}
+              />
+            ))
+          ) : (
+            <p>No users</p>
+          )}
+        </div>
+      </section>
     </>
   );
 };
