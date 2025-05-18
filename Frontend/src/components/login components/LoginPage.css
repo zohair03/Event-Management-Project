@@ -1,0 +1,59 @@
+.loginSection {
+    background: url('/assets/images/download.png') no-repeat center center;
+    background-size: cover;
+    background-color: #F6F8FD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: 50%;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 100%;
+    height: 47rem;
+}
+
+.login {
+    padding: 3rem;
+    margin-bottom: 5rem;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 500px;
+    border-radius: 2rem;
+    box-shadow: 4px 4px 10px #999;
+}
+
+.loginH1 {
+    color: rgb(98 76 245);
+    font-size: 58px;
+    line-height: 74px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 500px;
+}
+
+.loginForm form {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    width: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+.loginForm p {
+    color: rgb(107 114 128);
+}
+
+.signuptext {
+    color: rgb(98 76 245);
+}

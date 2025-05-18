@@ -1,0 +1,57 @@
+.heroSection {
+    background: url('/assets/images/download.png') no-repeat center center;
+    background-size: cover;
+    background-color: #F6F8FD;
+    height: fit-content;
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    height: 535px;
+    margin-left: 9%;
+    margin-right: 9%;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+
+.heroContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: xx-large;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.heroContent h1 {
+    margin: 0px;
+}
+
+.heroImg {
+    width: 667px;
+
+}
+
+.heroImg img {
+    width: inherit;
+    border-radius: 1rem;
+}
+
+.detailSection {
+    margin-left: 9%;
+    margin-right: 9%;
+}
+
+.detailH2 {
+    font-size: 40px;
+    line-height: 48px;
+}
+
+.eventsDiv {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}

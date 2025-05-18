@@ -1,4 +1,4 @@
-import useAuth from "../Hooks/useAuth";
+import useAuth from "../../Hooks/useAuth";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const PublicRoute = () => {

@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import useApiPrivate from "../Hooks/useApiPrivate.jsx";
-import User from "./User.jsx";
+import useApiPrivate from "../../Hooks/useApiPrivate.jsx";
+import User from "../reuseable components/User.jsx";
 
 const AllUsers = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const apiPrivate = useApiPrivate();
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const getAllUsers = async () => {
       try {
         const response = await apiPrivate.get("/api/user/allUsers");
-        setUsers(response.data.allUser);
+        setUsers(response?.data?.allUser);
       } catch (err) {
         console.log("error in getting all users: ", err);
-        navigate("/login", { state: { from: location }, replace: true });
       }
     };
     getAllUsers();
@@ -31,7 +30,7 @@ const AllUsers = () => {
         </div>
       </section>
 
-      <section style={{marginTop:"40px"}}>
+      <section>
         <div className="allUsers">
           {users?.length ? (
             users.map((user, i) => (
@@ -39,9 +38,11 @@ const AllUsers = () => {
                 key={i}
                 id={user._id}
                 name={user.name}
+                lastName={user.lastName}
                 userName={user.userName}
                 role={user.role}
                 email={user.email}
+                profilePic={user.profilePic}
               />
             ))
           ) : (

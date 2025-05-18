@@ -27,11 +27,13 @@ async function handleLogin(req, res) {
     }
 
     const payload = {
-      _id: user._id,
-      name: user.name,
-      userName: user.userName,
-      email: user.email,
-      role: user.role,
+      _id: user?._id,
+      name: user?.name,
+      lastName: user?.lastName,
+      userName: user?.userName,
+      email: user?.email,
+      role: user?.role,
+      profilePic: user?.profilePic,
     };
     const accessToken = generateAccessToken(payload);
     const refreshToken = generateRefreshToken(payload);
@@ -43,7 +45,7 @@ async function handleLogin(req, res) {
       secure: true,
       sameSite: "Strict",
     });
-    
+
     res.json({ user: payload, accessToken: accessToken });
   } catch (err) {
     console.log("error in login api: ", err);
@@ -53,18 +55,30 @@ async function handleLogin(req, res) {
 
 async function handleSignUp(req, res) {
   try {
-    const { name, email, userName, password } = req.body;
+    const { name, lastName, email, userName, password, profilePic } = req.body;
+    // if (!(name, email, userName, password, lastName, profilePic)) {
+    //   return res.status(400).json({ massege: "Invail input type" });
+    // }
+
     const hashedPassword = await bcrypt.hash(password, 10);
+    if (!hashedPassword) {
+      return res.status(400).json({ massege: "Error in password hashing type" });
+    }
+
     await User.create({
       name,
+      lastName,
       email,
       userName,
       password: hashedPassword,
       role: "user",
+      profilePic,
     });
-    res.json({ msg: "user created in data !!" });
+
+    res.status(200).json({ massege: "User Created Successfully" });
   } catch (err) {
-    res.status(500).json({ err });
+    console.log("error in sign up api: ", err);
+    res.status(500).json({ massege: "Server site error" });
   }
 }
 

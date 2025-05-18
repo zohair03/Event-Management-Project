@@ -1,37 +1,43 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import useApiPrivate from "../Hooks/useApiPrivate.jsx";
-import useAuth from "../Hooks/useAuth.jsx";
+import useApiPrivate from "../../Hooks/useApiPrivate.jsx";
+import api from "../../api/axios.js";
+import useAuth from "../../Hooks/useAuth.jsx";
 import Event from "./Event.jsx";
 
 const EventPage = () => {
   const location = useLocation();
-  const [eventClicked, setEventClicked] = useState(location.state);
-
-  const [eventName, setEventName] = useState(eventClicked?.name);
-  const [eventOrganizer, setEventOrganizer] = useState(eventClicked?.organizer);
-  const [eventLocation, setEventLocation] = useState(eventClicked?.location);
-  const [eventDescription, setEventDescription] = useState(
-    eventClicked?.description
-  );
-  const [eventImg, setEventImg] = useState(eventClicked?.img);
-
-  const [events, setEvents] = useState();
-  const apiPrivate = useApiPrivate();
   const { auth } = useAuth();
   var isAdmin = false;
 
+  const [eventClicked, setEventClicked] = useState(location?.state);
+  const [id, setId] = useState(eventClicked?.id);
+  const [category, setCategory] = useState(eventClicked?.category);
+  const [seletedEvent, setSeletedEvent] = useState({});
+  const [relatedEvents, setRelatedEvents] = useState([]);
+
   useEffect(() => {
-    const getEvents = async () => {
+    const getEventbyId = async () => {
       try {
-        const response = await apiPrivate.get("/api/event/allEvents");
-        setEvents(response.data.allEvents);
+        const response = await api.post(`/api/event/eventById/${id}`);
+        setSeletedEvent(response.data.selectedEvent);
       } catch (err) {
-        console.log("error in getting all events: ", err);
+        console.log("error in getting seleted event: ", err);
       }
     };
-    getEvents();
-  }, [eventClicked]);
+
+    const getRelatedEvents = async () => {
+      try {
+        const response = await api.get(`/api/event/relatedEvent/${category}`);
+        setRelatedEvents(response.data.relatedEvents);
+      } catch (err) {
+        console.log("error in getting all related events: ", err);
+      }
+    };
+
+    getRelatedEvents();
+    getEventbyId();
+  }, [id, category]);
 
   function onDeleted(id) {
     setEvents((preValue) => {
@@ -41,21 +47,31 @@ const EventPage = () => {
     });
   }
 
+  function handleEventClick(id, category) {
+    setId(id);
+    setCategory(category);
+  }
+
   return (
     <>
+      {/* event details section */}
       <section className="eventPageSection">
         <div className="eventPage">
           <div className="eventPageBanner">
-            <img src={eventImg} alt="banner" />
+            <img src={seletedEvent.banner} alt="banner" />
           </div>
 
           <div className="eventPageDetails">
             <div className="eventPageTitle">
-              <h2>{eventName}</h2>
+              <h2>{seletedEvent.name}</h2>
               <div className="eventPageTitleDiv">
-                <div>
-                  <p className="btn btnPrice">Free</p>
-                  <p className="btn btnGenera">space</p>
+                <div className="eventPageTitleDiv">
+                  <div className=" btnPriceEventsPage">
+                    {seletedEvent.free ? "Free" : `$${seletedEvent.price}`}
+                  </div>
+                  <div className=" btnGeneraEventsPage">
+                    {seletedEvent.category}
+                  </div>
                 </div>
                 <p>
                   By{" "}
@@ -64,14 +80,18 @@ const EventPage = () => {
                       color: "rgb(98 76 245 )",
                     }}
                   >
-                    {eventOrganizer}
+                    {seletedEvent.host}
                   </span>
                 </p>
               </div>
             </div>
 
             <div className="eventPageTicket">
-              <p>Sorry, tickets are no longer available.</p>
+              {true ? (
+                <button className="btn getTbtn">Get Ticket</button>
+              ) : (
+                <p>Sorry, tickets are no longer available.</p>
+              )}
             </div>
 
             <div className="eventPagetimeloc">
@@ -86,8 +106,12 @@ const EventPage = () => {
                   src="/assets/icons/calendar.svg"
                 />
                 <div>
-                  <p>Sat, Mar 16, 2024 - 12:50 PM / </p>
-                  <p>Sat, Mar 16, 2024 - 12:50 PM</p>
+                  <p>
+                    {seletedEvent.startDate} - {seletedEvent.startTime}/{" "}
+                  </p>
+                  <p>
+                    {seletedEvent.endDate} - {seletedEvent.endTime}
+                  </p>
                 </div>
               </div>
               <div className="eventPageloc">
@@ -100,29 +124,31 @@ const EventPage = () => {
                   data-nimg="1"
                   src="/assets/icons/location.svg"
                 />
-                <p>{eventLocation}</p>
+                <p>{seletedEvent.location}</p>
               </div>
             </div>
 
             <div className="eventPageDic">
               <p className="fristP">What You'll Learn:</p>
-              <p className="sP">{eventDescription}</p>
-              <p className="tP">https://unsplash.com/s/photos/stars</p>
+              <p className="sP">{seletedEvent.description}</p>
+              <p className="tP">{seletedEvent.link}</p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* related events section */}
       <section>
         <div className="detailSection">
-          <h2 className="detailH2">
-            Trust by <br /> Thousands of Events
-          </h2>
+          <h2 className="detailH2">Related Events</h2>
           <div className="eventsDiv">
-            {events?.length ? (
-              events.map((event, i) => {
+            {relatedEvents?.length ? (
+              relatedEvents.map((event, i) => {
                 if (auth?.user?.email === "admin03@gmail.com") {
                   isAdmin = true;
+                }
+                if (event._id === id) {
+                  return undefined;
                 }
                 return (
                   <Event
@@ -131,8 +157,11 @@ const EventPage = () => {
                     name={event.name}
                     location={event.location}
                     description={event.description}
-                    organizer={event.organizer}
+                    host={event.host}
                     isDeleted={onDeleted}
+                    isClicked={() => {
+                      handleEventClick(event._id, event.category);
+                    }}
                     edit={
                       isAdmin
                         ? true
@@ -140,7 +169,15 @@ const EventPage = () => {
                         ? true
                         : false
                     }
-                    img={"https://picsum.photos/1000/1000"}
+                    category={event.category}
+                    img={event.banner}
+                    startDate={event.startDate}
+                    startTime={event.startTime}
+                    endDate={event.endDate}
+                    endTime={event.endTime}
+                    price={event.price}
+                    free={event.free}
+                    link={event.link}
                   />
                 );
               })

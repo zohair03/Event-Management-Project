@@ -15,13 +15,45 @@ const eventSchema = new Schema(
     description: {
       type: String,
     },
-    organizer: {
+    host: {
       type: String,
       required: true,
     },
     email: {
       type: String,
       required: true,
+    },
+    banner: {
+      type: String,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    startDate: {
+      type: String,
+      required: true,
+    },
+    startTime: {
+      type: String,
+      required: true,
+    },
+    endDate: {
+      type: String,
+      required: true,
+    },
+    endTime: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: String,
+    },
+    free: {
+      type: Boolean,
+    },
+    link: {
+      type: String,
     },
   },
   { timestamps: true }

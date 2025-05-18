@@ -15,7 +15,7 @@ const Footer = () => {
                   width={40}
                   height={40}
                 />{" "}
-                <h2>Evently</h2>
+                <h2 style={{"margin":"0px"}}>Evently</h2>
               </div>
             </Link>
           </div>

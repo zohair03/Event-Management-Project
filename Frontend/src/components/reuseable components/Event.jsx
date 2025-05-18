@@ -1,21 +1,46 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import { apiPrivate } from "../api/axios.js";
+import { apiPrivate } from "../../api/axios.js";
 
 const Event = ({
   id,
   name,
+  lastName,
   location,
   description,
-  organizer,
+  host,
   edit,
+  isClicked = () => {},
   isDeleted,
+  category,
   img,
+  startDate,
+  startTime,
+  endDate,
+  endTime,
+  price,
+  free,
+  link,
 }) => {
   const navigate = useNavigate();
 
   const handleUpdate = () => {
     navigate("/updateEvent", {
-      state: { id, name, location, description, organizer, img },
+      state: {
+        id,
+        name,
+        location,
+        description,
+        host,
+        img,
+        category,
+        startDate,
+        startTime,
+        endDate,
+        endTime,
+        price,
+        free,
+        link,
+      },
     });
   };
 
@@ -33,13 +58,19 @@ const Event = ({
 
   const handleClick = () => {
     navigate(`/events/${id}`, {
-      state: { id, name, location, description, organizer, img },
+      state: { id, category },
     });
+    isClicked();
   };
 
   return (
     <div className="card">
-      <img className="cardImg" src={img} alt="london" onClick={handleClick} />
+      <img
+        className="cardImg"
+        src={img}
+        alt="event banner"
+        onClick={handleClick}
+      />
 
       {edit && (
         <div className="cardM">
@@ -68,15 +99,15 @@ const Event = ({
 
       <div className="cardDetails">
         <div className="cardPrice">
-          <div className="btn btnPrice">$100</div>
-          <div className="btn btnGenera">London</div>
+          <div className="btn btnPrice">{free ? "Free" : `$${price}`}</div>
+          <div className="btn btnGenera">{category}</div>
         </div>
-        <span className="cardTime">Sat, Mar 16, 1:17 PM</span>
+        <span className="cardTime">{`${startDate} ${startTime}`}</span>
         <h4 className="cardTitle" onClick={handleClick}>
           {name}
         </h4>
         <div>
-          <span>{organizer}</span>
+          <span>{host}</span>
         </div>
       </div>
     </div>

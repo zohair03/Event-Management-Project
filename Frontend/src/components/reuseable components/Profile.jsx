@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import useApiPrivate from "../Hooks/useApiPrivate.jsx";
+import useApiPrivate from "../../Hooks/useApiPrivate.jsx";
 import Event from "./Event.jsx";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth.jsx";
 
 const Profile = () => {
   const apiPrivate = useApiPrivate();
   const navigate = useNavigate();
+  const { auth } = useAuth();
 
   const [events, setEvents] = useState();
 
@@ -31,6 +33,35 @@ const Profile = () => {
 
   return (
     <>
+      {/* heading */}
+      <section className="headingSection">
+        <div>
+          <h1>Account</h1>
+          <button className="btn" onClick={()=>{navigate("/updateProfile")}}>Account Settings</button>
+        </div>
+      </section>
+
+      {/* account */}
+      <section className="accountSection">
+        <div className="account">
+          {auth?.user && (
+            <>
+              <div className="accountPic">
+                <img src={auth.user.profilePic} alt="profile pic" />
+              </div>
+              <div>
+                <p>
+                  Name: {auth.user.name} {auth.user.lastName}
+                </p>
+                <p>Email: {auth.user.email}</p>
+                <p>userName: {auth.user.userName}</p>
+                <p>role: {auth.user.role}</p>
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+
       {/* heading */}
       <section className="headingSection">
         <div>
@@ -69,10 +100,18 @@ const Profile = () => {
                   name={event.name}
                   location={event.location}
                   description={event.description}
-                  organizer={event.organizer}
+                  host={event.host}
                   edit={true}
                   isDeleted={onDeleted}
-                  img={"https://picsum.photos/300/200"}
+                  category={event.category}
+                  img={event.banner}
+                  startDate={event.startDate}
+                  startTime={event.startTime}
+                  endDate={event.endDate}
+                  endTime={event.endTime}
+                  price={event.price}
+                  free={event.free}
+                  link={event.link}
                 />
               ))
             ) : (

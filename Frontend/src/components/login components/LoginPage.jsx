@@ -1,7 +1,8 @@
-import api from "../api/axios.js";
-import React, { useState, useRef, useEffect } from "react";
+import api from "../../api/axios.js";
+import { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../Hooks/useAuth.jsx";
+import useAuth from "../../Hooks/useAuth.jsx";
+import "./LoginPage.css";
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -50,6 +51,7 @@ const LoginPage = () => {
       <div className="login">
         <h1 className="loginH1">Login</h1>
         <span className="loginMsg">{resMsg}</span>
+        
         <div className="loginForm">
           <form onSubmit={handleSubmit}>
             <label htmlFor="email">Email</label>
@@ -71,10 +73,15 @@ const LoginPage = () => {
               required
               placeholder="password"
             />
-            <button type="Submit" className="btn loginBtn">Login</button>
+            <button type="Submit" className="btn">
+              Login
+            </button>
           </form>
           <p>
-            Need an account? <Link to="/signUp"className="signuptext">Signup</Link>
+            Need an account?{" "}
+            <Link to="/signUp" className="signuptext">
+              Signup
+            </Link>
           </p>
         </div>
       </div>

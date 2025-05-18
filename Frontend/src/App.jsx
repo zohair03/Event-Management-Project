@@ -1,20 +1,21 @@
 import "./App.css";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import CreateEvent from "./components/CreateEvent";
-import Home from "./components/Home.jsx";
-import LandingPage from "./components/LandingPage";
-import LoginPage from "./components/LoginPage.jsx";
-import UpdateEvent from "./components/UpdateEvent";
-import SignUpPage from "./components/SignUpPage";
-import NotFound from "./components/NotFound";
-import Layout from "./components/Layout.jsx";
-import RequiredAuth from "./components/RequireAuth.jsx";
-import AllUsers from "./components/AllUsers.jsx";
-import UnAuthorized from "./components/UnAuthorized.jsx";
-import PublicRoute from "./components/PublicRoute.jsx";
-import UserEvents from "./components/Profile.jsx";
-import EventPage from "./components/EventPage.jsx";
+import CreateEvent from "./components/page components/CreateEvent";
+import Home from "./components/page components/Home.jsx";
+import LandingPage from "./components/page components/LandingPage";
+import LoginPage from "./components/login components/LoginPage.jsx";
+import UpdateEvent from "./components/page components/UpdateEvent";
+import SignUpPage from "./components/login components/SignUpPage";
+import NotFound from "./components/routes components/NotFound";
+import Layout from "./components/routes components/Layout.jsx";
+import RequiredAuth from "./components/routes components/RequireAuth.jsx";
+import AllUsers from "./components/page components/AllUsers.jsx";
+import UnAuthorized from "./components/routes components/UnAuthorized.jsx";
+import PublicRoute from "./components/routes components/PublicRoute.jsx";
+import UserEvents from "./components/reuseable components/Profile.jsx";
+import EventPage from "./components/reuseable components/EventPage.jsx";
+import UpdateProfile from "./components/page components/UpdateProfile.jsx";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/createEvent" element={<CreateEvent />} />
           <Route path="/updateEvent" element={<UpdateEvent />} />
           <Route path="/profile" element={<UserEvents />} />
+          <Route path="/updateProfile" element={<UpdateProfile />} />
         </Route>
 
         {/* Only admin */}

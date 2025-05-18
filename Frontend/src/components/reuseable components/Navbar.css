@@ -1,0 +1,111 @@
+.navbar {
+    display: flex;
+    background-color: white;
+    padding: 1.25rem 0rem;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    margin-bottom: 2px;
+    width: 100%;
+}
+
+.navbartext {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+    color: inherit;
+    text-decoration: inherit;
+    text-decoration: none;
+}
+
+.navbarLogo {
+    margin-left: 9%;
+}
+
+.navbarLogout {
+    margin-right: 9%;
+}
+
+.navbtn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 3.2rem;
+}
+
+.profilePicDiv {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profilePic {
+    width: 30px;
+    height: 30px;
+}
+
+.profilePic img {
+    width: inherit;
+    height: inherit;
+    border-radius: 1rem;
+}
+
+.navbarButton * {
+    margin-left: 15px;
+}
+
+.EventlyLogo {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.loginBtnDiv {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    justify-content: flex-end;
+
+}
+
+.loginBtn {
+    height: fit-content;
+    border-radius: 9999px;
+    /* Makes it pill-shaped */
+    background-color: #634CF3;
+    /* Choose your preferred color */
+    color: #fff !important;
+    border: none;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-weight: 500;
+    font-size: .875rem;
+    box-shadow: 0 2px 6px rgba(99, 76, 243, 0.15);
+    transition: background 0.2s;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.sidebarbtn {
+    display: none;
+}
+
+/* media queries */
+
+@media(max-width:1023px) {
+    .navbtn {
+        display: none;
+        justify-content: space-around;
+        align-items: center;
+        gap: 3.2rem;
+    }
+
+    .sidebarbtn {
+        display: block;
+    }
+}

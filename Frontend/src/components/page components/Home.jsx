@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Event from "./Event.jsx";
-import useApiPrivate from "../Hooks/useApiPrivate.jsx";
-import useAuth from "../Hooks/useAuth.jsx";
-import BannerCarousel from "./BannerCarousel.jsx";
+import Event from "../reuseable components/Event.jsx";
+import useApiPrivate from "../../Hooks/useApiPrivate.jsx";
+import api from "../../api/axios.js";
+import useAuth from "../../Hooks/useAuth.jsx";
+import BannerCarousel from "../reuseable components/BannerCarousel.jsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import SearchEvent from "../reuseable components/SearchEvent.jsx";
 
 const Home = () => {
   const { auth } = useAuth();
 
   const apiPrivate = useApiPrivate();
   const [events, setEvents] = useState();
+  const [filter, setFilter] = useState("All");
+
   var isAdmin = false;
 
   useEffect(() => {
-    const getEvents = async () => {
+    const getAllEvents = async () => {
+      console.log("all:", filter);
       try {
         const response = await apiPrivate.get("/api/event/allEvents");
         setEvents(response.data.allEvents);
@@ -23,8 +28,26 @@ const Home = () => {
         console.log("error in getting all events: ", err);
       }
     };
-    getEvents();
-  }, []);
+
+    const getFilteredEvent = async () => {
+      console.log("filtered event", filter);
+      try {
+        const response = await api.post("/api/event/category", {
+          category: filter,
+        });
+        console.log("res:", response.data.isFilteredCategory);
+        setEvents(response.data.isFilteredCategory);
+      } catch (err) {
+        console.log("error in getting filtered events: ", err);
+      }
+    };
+
+    if (filter === "All") {
+      getAllEvents();
+    } else {
+      getFilteredEvent();
+    }
+  }, [filter]);
 
   function onDeleted(id) {
     setEvents((preValue) => {
@@ -34,12 +57,22 @@ const Home = () => {
     });
   }
 
+  const handleFilterEvent = (category) => {
+    console.log("handleFilterEvent: ", category);
+    setFilter(category);
+  };
+
   return (
     <div className="crowdBackground">
-
       <section className="bannerSection">
         <div className="bannerC">
           <BannerCarousel />
+        </div>
+      </section>
+
+      <section className="homePageEventSearch">
+        <div className="homePageEventSearchDiv">
+          <SearchEvent categorySelected={handleFilterEvent} />
         </div>
       </section>
 
@@ -57,7 +90,7 @@ const Home = () => {
                   name={event.name}
                   location={event.location}
                   description={event.description}
-                  organizer={event.organizer}
+                  host={event.host}
                   isDeleted={onDeleted}
                   edit={
                     isAdmin
@@ -66,7 +99,15 @@ const Home = () => {
                       ? true
                       : false
                   }
-                  img={"https://picsum.photos/1000/1000"}
+                  category={event.category}
+                  img={event.banner}
+                  startDate={event.startDate}
+                  startTime={event.startTime}
+                  endDate={event.endDate}
+                  endTime={event.endTime}
+                  price={event.price}
+                  free={event.free}
+                  link={event.link}
                 />
               );
             })

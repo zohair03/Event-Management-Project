@@ -6,6 +6,7 @@ import { connectMongoDB } from "./connection.js";
 import auth from "./routes/authRoute.js";
 import eventRoute from "./routes/eventRoute.js";
 import userRoute from "./routes/userRoute.js";
+import categoryRoute from "./routes/categoryRoute.js";
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use("/api/auth", auth);
 app.use("/api/user", userRoute);
 app.use("/api/event", eventRoute);
+app.use("/api/category", categoryRoute);
 
 connectMongoDB(process.env.MONGO_URI);
 

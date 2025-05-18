@@ -1,0 +1,109 @@
+.signUpSection {
+    background: url('/assets/images/download.png') no-repeat center center;
+    background-size: cover;
+    background-color: #F6F8FD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.signUp {
+    padding: 3rem;
+    margin: 3rem 3rem;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 500px;
+    border-radius: 2rem;
+    box-shadow: 4px 4px 10px #999;
+}
+
+.signUpFormDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 500px;
+}
+
+.signUpFormDiv form {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    width: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+.signupH1 {
+    display: flex;
+    width: 100%;
+}
+
+.loginH1 {
+    color: rgb(98 76 245);
+    font-size: 58px;
+    line-height: 74px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.signupGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+}
+
+.signupGrid div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.signupGridEmail {
+    grid-column: span 2;
+}
+
+.signupGridFileUploadDiv {
+    grid-column: span 2;
+}
+
+.signuptext {
+    color: rgb(98 76 245);
+}
+
+@media(max-width:740px) {
+    .signupGrid {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .signUp {
+        width: 100%;
+    }
+
+    .signUpFormDiv {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        width: inherit;
+    }
+}
+
+@media(max-width:370px) {
+
+    .signUp {
+        box-shadow: none;
+        padding: 1rem;
+        margin: 1rem 1rem;
+    }
+
+    .signUpSection {
+        background: white;
+    }
+}
