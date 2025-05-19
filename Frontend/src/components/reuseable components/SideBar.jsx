@@ -5,6 +5,13 @@ import "./SideBar.css";
 
 const SideBar = ({ active, closeSideBar }) => {
   const { auth } = useAuth();
+
+  const handleClick = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/";
+  };
+
   return (
     <>
       <div className={active ? "nav-menu active " : "nav-menu"}>
@@ -25,7 +32,7 @@ const SideBar = ({ active, closeSideBar }) => {
                 width={40}
                 height={40}
               />{" "}
-              <h2>Evently</h2>
+              <h2 style={{ margin: "0px" }}>Evently</h2>
             </div>
           </Link>
         </div>
@@ -60,6 +67,11 @@ const SideBar = ({ active, closeSideBar }) => {
             >
               All Users
             </Link>
+          )}
+          {auth?.user && (
+            <button className="btn" onClick={handleClick}>
+              Logout
+            </button>
           )}
         </div>
       </div>

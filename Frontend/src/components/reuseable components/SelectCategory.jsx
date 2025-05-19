@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import useApiPrivate from "../../Hooks/useApiPrivate.jsx";
 import NewCategoryModal from "./NewCategory.jsx";
 import api from "../../api/axios.js";
+import "./SelectCategory.css"
 
 const SelectCategory = ({eventCategory}) => {
   const [categories, setCategories] = useState([]);

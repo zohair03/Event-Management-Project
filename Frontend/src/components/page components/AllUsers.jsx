@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useApiPrivate from "../../Hooks/useApiPrivate.jsx";
 import User from "../reuseable components/User.jsx";
+import "./AllUsers.css"
 
 const AllUsers = () => {
   const location = useLocation();
@@ -30,8 +31,8 @@ const AllUsers = () => {
         </div>
       </section>
 
-      <section>
-        <div className="allUsers">
+      <section className="allUsersSection">
+        <div className="eventsDiv">
           {users?.length ? (
             users.map((user, i) => (
               <User

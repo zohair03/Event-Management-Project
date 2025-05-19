@@ -3,6 +3,7 @@ import useApiPrivate from "../../Hooks/useApiPrivate.jsx";
 import Event from "./Event.jsx";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth.jsx";
+import "./Profile.css";
 
 const Profile = () => {
   const apiPrivate = useApiPrivate();

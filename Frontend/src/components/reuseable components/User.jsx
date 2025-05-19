@@ -1,8 +1,9 @@
 import React from "react";
+import "./User.css"
 
 const User = ({ id, name, lastName, email, userName, role, profilePic }) => {
   return (
-    <div className="card ">
+    <div className="card SCard ">
       <div className="userCard">
         <div className="userPic">
           <img src={profilePic} alt="profile pic" />

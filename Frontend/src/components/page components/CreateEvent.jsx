@@ -4,6 +4,8 @@ import useAuth from "../../Hooks/useAuth.jsx";
 import { useNavigate, useLocation } from "react-router-dom";
 import SelectCategory from "../reuseable components/SelectCategory.jsx";
 import FileUpload from "../reuseable components/FileUpload.jsx";
+import DateAndTime from "../reuseable components/DateAndTime.jsx";
+import "./CreateEvent.css";
 
 const CreateEvent = () => {
   const apiPrivate = useApiPrivate();
@@ -28,8 +30,8 @@ const CreateEvent = () => {
     name: eventName,
     location: eventLocation,
     description: description,
-    host: `${auth.user.name} ${auth.user.lastName}`,
-    email: auth.user.email,
+    host: `${auth?.user?.name} ${auth?.user?.lastName}`,
+    email: auth?.user?.email,
     banner: banner,
     category: category,
     startDate: startDate,
@@ -64,7 +66,7 @@ const CreateEvent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("category: ",category)
+    console.log("category: ", category);
     try {
       const response = await apiPrivate.post("/api/event/createEvent", event);
 
@@ -84,7 +86,7 @@ const CreateEvent = () => {
   };
 
   const handleSelectedCategory = (selectedCategory) => {
-    console.log("selected C:",selectedCategory)
+    console.log("selected C:", selectedCategory);
     setcategory(selectedCategory);
   };
 
@@ -127,16 +129,7 @@ const CreateEvent = () => {
               ></textarea>
 
               {/* event banner */}
-              {/* <div className="dropbox">
-                <input
-                  type="file"
-                  // value={banner}
-                  required
-                  onChange={handleFileUpload}
-                />
-              </div> */}
-
-              <FileUpload/>
+              <FileUpload />
 
               {/* location */}
               <div className="CreateGridLocation">
@@ -160,53 +153,27 @@ const CreateEvent = () => {
               </div>
 
               {/* Date & time of event */}
-              <div className="createGridDate">
+              <div className="createGridDate datetimeinput">
                 <img
                   src="/assets/icons/calendar.svg"
                   alt="calendar"
                   width={24}
                   height={24}
                 />
-                <input
-                  type="date"
-                  value={startDate}
-                  placeholder="Start Date"
-                  onChange={(e) => {
-                    setStartDate(e.target.value);
-                  }}
-                />
-                <input
-                  type="time"
-                  value={startTime}
-                  placeholder="Start Time"
-                  onChange={(e) => {
-                    setStartTime(e.target.value);
-                  }}
-                />
+
+                <span style={{ "white-space": "nowrap" }}>Start Date </span>
+                <DateAndTime />
               </div>
-              <div className="createGridDate">
+              <div className="createGridDate datetimeinput">
                 <img
                   src="/assets/icons/calendar.svg"
                   alt="calendar"
                   width={24}
                   height={24}
                 />
-                <input
-                  type="date"
-                  value={endDate}
-                  placeholder="End Date"
-                  onChange={(e) => {
-                    setEndDate(e.target.value);
-                  }}
-                />
-                <input
-                  type="time"
-                  value={endTime}
-                  placeholder="End Time"
-                  onChange={(e) => {
-                    setEndTime(e.target.value);
-                  }}
-                />
+
+                <span style={{ "white-space": "nowrap" }}>End Date </span>
+                <DateAndTime />
               </div>
 
               {/* price div */}

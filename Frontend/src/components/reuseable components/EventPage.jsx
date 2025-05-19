@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import useApiPrivate from "../../Hooks/useApiPrivate.jsx";
+import { useLocation } from "react-router-dom";
 import api from "../../api/axios.js";
 import useAuth from "../../Hooks/useAuth.jsx";
 import Event from "./Event.jsx";
+import "./EventPage.css";
 
 const EventPage = () => {
   const location = useLocation();
@@ -65,7 +65,7 @@ const EventPage = () => {
             <div className="eventPageTitle">
               <h2>{seletedEvent.name}</h2>
               <div className="eventPageTitleDiv">
-                <div className="eventPageTitleDiv">
+                <div className="eventPageTitleDivF">
                   <div className=" btnPriceEventsPage">
                     {seletedEvent.free ? "Free" : `$${seletedEvent.price}`}
                   </div>

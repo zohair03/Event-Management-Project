@@ -1,5 +1,6 @@
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { apiPrivate } from "../../api/axios.js";
+import "./Event.css"
 
 const Event = ({
   id,
@@ -74,7 +75,7 @@ const Event = ({
 
       {edit && (
         <div className="cardM">
-          <button className="" onClick={handleDelete}>
+          <button  onClick={handleDelete}>
             <img
               alt="delete"
               loading="lazy"
@@ -84,7 +85,7 @@ const Event = ({
               src="/assets/icons/delete.svg"
             />
           </button>
-          <button className="" onClick={handleUpdate}>
+          <button  onClick={handleUpdate}>
             <img
               alt="edit "
               loading="lazy"

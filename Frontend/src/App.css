@@ -191,23 +191,22 @@ form label {
 
 /* ---------------------------------- Event Card CSS ---------------------------------- */
 
-.events {
+/* .events {
     margin-left: 9%;
     margin-right: 9%;
 
-}
+} */
 
-.eventsDiv {
+/* .eventsDiv {
     display: grid;
     gap: 2.5rem;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     padding-top: 3rem;
     padding-bottom: 3rem;
-}
+} */
 
-.card {
+/* .card {
     background: white;
-    /* backdrop-filter: blur(10px); */
     display: flex;
     flex-direction: column;
     border-radius: 0.75rem;
@@ -280,7 +279,7 @@ form label {
     height: 50%;
     padding: 1.25rem;
     color: black;
-}
+} */
 
 /* ---------------------------------- Hero CSS ---------------------------------- */
 
@@ -354,7 +353,7 @@ form label {
     display: none;
 }
 
-.searchEvent {
+/* .searchEvent {
     width: 100%;
 }
 
@@ -372,8 +371,8 @@ select {
     border-radius: 3rem;
     margin: 0;
     width: 100%;
-    /* box-shadow: 4px 4px 15px #999 ; */
-}
+    
+} */
 
 /* ---------------------------------- login CSS ---------------------------------- */
 
@@ -519,8 +518,19 @@ select {
     font-weight: 700;
 }
 
+@media(max-width:825px) {
+    .headingSection {
+        height: 175px;
+    }
+
+    .headingSection div h1 {
+        font-size: 28px;
+        line-height: 36px;
+    }
+}
+
 /* ---------------------------------- create CSS ---------------------------------- */
-.create {
+/* .create {
     margin-left: 9%;
     margin-right: 9%;
     padding-top: 3%;
@@ -625,7 +635,7 @@ textarea {
     height: 1.25rem;
     background-image: none;
     box-shadow: none;
-}
+} */
 
 .dropbox {
     width: 100%;
@@ -645,7 +655,7 @@ textarea {
 
 /* ---------------------------------- create CSS ---------------------------------- */
 
-.tickets {
+/* .tickets {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -674,11 +684,11 @@ textarea {
     font-size: 18px;
     line-height: 28px;
     margin: 0;
-}
+} */
 
-/* ---------------------------------- create CSS ---------------------------------- */
+/* ---------------------------------- user CSS ---------------------------------- */
 
-.allUsers {
+/* .allUsers {
     display: flex;
     flex-wrap: wrap;
     gap: 2.5rem;
@@ -686,9 +696,9 @@ textarea {
     margin-right: 9%;
     padding-top: 3rem;
     padding-bottom: 3rem;
-}
+} */
 
-.userCard {
+/* .userCard {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -715,12 +725,12 @@ textarea {
 
 .userImg img {
     height: fit-content;
-}
+} */
 
 
 /* ---------------------------------- eventPage CSS ---------------------------------- */
 
-.eventPageSection {
+/* .eventPageSection {
     background: url('/assets/images/download.png') no-repeat center center;
     background-size: cover;
     background-color: #F6F8FD;
@@ -766,11 +776,11 @@ textarea {
     margin: 0;
 }
 
-/* .eventPageTitleDiv div {
+ .eventPageTitleDiv div {
     display: flex;
     gap: .75rem;
     margin: 0;
-} */
+} 
 
 .eventPageTitleDiv p {
 
@@ -900,10 +910,10 @@ textarea {
 }
 
 .eventPageBanner img {
-    /* background-size: cover; */
+   
     width: inherit;
     height: inherit;
-}
+} */
 
 /* ---------------------------------- HomePage CSS ---------------------------------- */
 .homePageSection {
@@ -920,28 +930,28 @@ textarea {
     height: inherit;
 }
 
-.crowdBackground {
-    /* background: url('/assets/images/download.png'); */
+/* .crowdBackground {
+    
     background-color: #F6F8FD;
     background-repeat: no-repeat;
     background-size: contain, contain, cover;
     background-position: bottom, top, top;
     background-attachment: fixed, scroll;
-}
+} */
 
-.homePageEventSearch {
+/* .homePageEventSearch {
     margin-top: 3rem;
 }
 
 .homePageEventSearchDiv {
     margin-left: 9%;
     margin-right: 9%;
-}
+} */
 
 /* ---------------------------------- Footer CSS ---------------------------------- */
 
-footer {
-    /* border-top: 1px solid black; */
+/* footer {
+   
     box-shadow: -1px -5px 12px 0px rgba(0, 0, 0, 0.15);
     padding: 0px;
     margin: 0px;
@@ -953,16 +963,16 @@ footer {
     padding-bottom: 1.5rem;
     justify-content: space-between;
     gap: 1rem;
-}
+} */
 
 /* ---------------------------------- trending CSS ---------------------------------- */
 
-.bannerSection {
+/* .bannerSection {
     background: url('/assets/images/download.png');
     background-size: cover;
-}
+} */
 
-.bannerC {
+/* .bannerC {
     padding-top: 3rem;
     margin-left: 9%;
     margin-right: 9%;
@@ -973,7 +983,7 @@ footer {
     height: 500px;
     width: 100%;
     object-fit: cover;
-}
+} */
 
 /* .EventlyLogo {
     display: flex;
@@ -983,7 +993,7 @@ footer {
 
 /* ---------------------------------- account CSS ---------------------------------- */
 
-.account {
+/* .account {
     margin-left: 9%;
     margin-right: 9%;
     padding-top: 3rem;
@@ -1007,11 +1017,11 @@ footer {
     width: inherit;
     object-fit: cover;
     border-radius: 50%;
-}
+} */
 
 /* ---------------------------------- update profile CSS ---------------------------------- */
 
-.updateProfileSection {
+/* .updateProfileSection {
     width: 100%;
 }
 
@@ -1038,10 +1048,10 @@ footer {
     border-radius: 3rem;
     margin: 0;
     box-shadow: 4px 4px 15px lightblue inset;
-}
+} */
 
 /* ---------------------------------- new category CSS ---------------------------------- */
-.dropdown-container {
+/* .dropdown-container {
     position: relative;
     width: 100%;
     font-family: sans-serif;
@@ -1099,7 +1109,7 @@ footer {
 .add-new {
     color: #7c3aed;
     font-weight: 500;
-}
+} */
 
 .modal-overlay {
     position: fixed;

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import useApiPrivate from "../../Hooks/useApiPrivate";
+import FileUpload from "../reuseable components/FileUpload.jsx";
+import "./UpdateProfile.css"
 
 const UpdateProfile = () => {
   const { auth, login } = useAuth();
@@ -106,8 +108,9 @@ const UpdateProfile = () => {
                 setUserName(e.target.value);
               }}
             />
-            <input type="file" onChange={handleFileUpload} />
-
+            <div className="profileupdate">
+              <FileUpload />
+            </div>
             <button type="submit" className="btn">
               Update Profile
             </button>

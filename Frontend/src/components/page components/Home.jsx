@@ -8,6 +8,7 @@ import BannerCarousel from "../reuseable components/BannerCarousel.jsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SearchEvent from "../reuseable components/SearchEvent.jsx";
+import "./Home.css"
 
 const Home = () => {
   const { auth } = useAuth();

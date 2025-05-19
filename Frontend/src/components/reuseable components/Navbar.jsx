@@ -13,7 +13,7 @@ const Navbar = () => {
   const handleClick = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   const handleSideBar = () => {
@@ -79,6 +79,7 @@ const Navbar = () => {
                 height={24}
                 alt="sidebar"
                 onClick={handleSideBar}
+                className="sidebarbtn"
               />
               <SideBar active={isOpenSidebar} closeSideBar={handleSideBar} />
             </div>
@@ -93,7 +94,7 @@ const Navbar = () => {
                 alt="Profile Pic"
               />
             </Link>
-            <button className="btn" onClick={handleClick}>
+            <button className="btn logoutDisply" onClick={handleClick}>
               Logout
             </button>
           </div>
@@ -107,7 +108,7 @@ const Navbar = () => {
               onClick={handleSideBar}
               className="sidebarbtn"
             />
-            {/* <SideBar active={isOpenSidebar} closeSideBar={handleSideBar} /> */}
+            <SideBar active={isOpenSidebar} closeSideBar={handleSideBar} />
             <Link to="/login" className="btn navbartext loginBtn">
               Login
             </Link>

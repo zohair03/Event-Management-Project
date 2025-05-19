@@ -1,0 +1,39 @@
+.allUsersSection {
+    padding: 0rem 9%;
+}
+
+.eventsDiv {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    width: 100%;
+}
+
+@media(max-width:1500px) {
+    .eventsDiv {
+        gap: 2rem;
+    }
+}
+
+@media(max-width:1024px) {
+    .eventsDiv {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    .allUsersSection {
+        padding: 0rem 6%;
+    }
+}
+
+@media(max-width:640px) {
+    .eventsDiv {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .allUsersSection {
+        padding: 0rem 4%;
+    }
+}

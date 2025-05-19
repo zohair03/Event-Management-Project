@@ -1,0 +1,63 @@
+.crowdBackground {
+    /* background: url('/assets/images/download.png'); */
+    background-color: #F6F8FD;
+    background-repeat: no-repeat;
+    background-size: contain, contain, cover;
+    background-position: bottom, top, top;
+    background-attachment: fixed, scroll;
+}
+
+.bannerSection {
+    background: url('/assets/images/download.png');
+    background-size: cover;
+}
+
+.bannerC {
+    padding-top: 3rem;
+    margin-left: 9%;
+    margin-right: 9%;
+}
+
+.bannerCdiv img {
+    border-radius: 0.75rem;
+    height: 500px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.homePageEventSearch {
+    margin-top: 3rem;
+}
+
+.homePageEventSearchDiv {
+    margin-left: 9%;
+    margin-right: 9%;
+}
+
+.events {
+    margin-left: 9%;
+    margin-right: 9%;
+
+}
+
+@media(max-width:780px) {
+    .bannerC {
+        padding-top: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .bannerCdiv img {
+        border-radius: 0;
+    }
+
+    .homePageEventSearchDiv {
+        margin-left: 4%;
+        margin-right: 4%;
+    }
+
+    .events {
+        margin-left: 4%;
+        margin-right: 4%;
+    }
+}

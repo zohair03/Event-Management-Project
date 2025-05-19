@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import api from "../../api/axios";
+import "./SearchEvent.css"
 
 const SearchEvent = ({ categorySelected }) => {
   const [categories, setCategories] = useState([]);

@@ -1,0 +1,265 @@
+.eventPageSection {
+    background: url('/assets/images/download.png') no-repeat center center;
+    background-size: cover;
+    background-color: #F6F8FD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: 50%;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 100%;
+    height: fit-content;
+}
+
+.eventPageDetails {
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem;
+    gap: 2rem;
+}
+
+.eventPageTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0px;
+    margin: 0px;
+}
+
+.eventPageTitle h2 {
+    font-size: 40px;
+    line-height: 48px;
+    font-weight: 700;
+    margin: 0px;
+    padding: 0px;
+}
+
+.eventPageTitleDiv {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: .75rem;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPageTitleDivF {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: 0;
+    margin: 0;
+}
+
+
+.eventPageTitleDiv p {
+    font-size: 18px;
+    line-height: 28px;
+    margin: 0;
+    margin-left: 0.5rem;
+}
+
+.eventPageTicket {
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPageTicket p {
+    padding: .5rem;
+    margin: 0px;
+    color: rgb(248 113 113);
+}
+
+.eventPagetimeloc {
+    gap: 1.25rem;
+    flex-direction: column;
+    display: flex;
+    padding: 0px;
+    margin: 0px;
+}
+
+.eventPagetime {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPagetime div {
+    display: flex;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPagetime div p {
+    padding: 0px;
+    margin: 0px;
+}
+
+.eventPageloc {
+    display: flex;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    gap: .75rem;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPageloc p {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    padding: 0;
+    margin: 0;
+}
+
+.eventPageDic {
+    gap: .5rem;
+    flex-direction: column;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.eventPageDic .fristP {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 700;
+    color: rgb(84 84 84);
+    margin: 0px;
+    padding: 0px;
+}
+
+.sP {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.tP {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    text-decoration-line: underline;
+    --tw-text-opacity: 1;
+    color: rgb(98 76 245);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+}
+
+.eventPage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    margin-left: 9%;
+    margin-right: 9%;
+}
+
+.eventPageBanner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    max-width: 80vh;
+}
+
+.eventPageBanner img {
+    object-fit: cover;
+    object-position: center;
+    width: inherit;
+    height: inherit;
+}
+
+@media(max-width:1535px) {
+    .eventPage {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .eventPagetime div {
+
+        flex-direction: column;
+    }
+}
+
+@media(max-width:890px) {
+    .eventPageTitle h2 {
+        font-size: 36px;
+        line-height: 44px;
+    }
+}
+
+@media(max-width:767px) {
+    .eventPage {
+        grid-template-columns: 1fr;
+    }
+
+    .eventPageDetails {
+        padding: 1rem;
+        gap: 2rem;
+    }
+
+    .eventPageTitleDiv {
+        gap: 0.5rem;
+    }
+
+    .eventPagetimeloc {
+        gap: 0.5rem;
+    }
+}
+
+@media(max-width:640px) {
+    .eventPageTitleDiv {
+
+        flex-direction: column;
+        align-items: flex-start;
+
+    }
+
+    .eventPageTitle h2 {
+        font-size: 32px;
+        line-height: 40px;
+    }
+
+    .eventPagetime div {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .eventPageloc p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .sP {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .tP {
+        font-size: 14px;
+    }
+
+    .detailH2 {
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 40px;
+    }
+}

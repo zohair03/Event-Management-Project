@@ -1,12 +1,11 @@
 .navbar {
     display: flex;
     background-color: white;
-    padding: 1.25rem 0rem;
+    padding: 1.25rem 9%;
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     margin-bottom: 2px;
-    width: 100%;
 }
 
 .navbartext {
@@ -18,13 +17,9 @@
     text-decoration: none;
 }
 
-.navbarLogo {
-    margin-left: 9%;
-}
+.navbarLogo {}
 
-.navbarLogout {
-    margin-right: 9%;
-}
+.navbarLogout {}
 
 .navbtn {
     display: flex;
@@ -48,6 +43,7 @@
     width: inherit;
     height: inherit;
     border-radius: 1rem;
+    border: 2px solid rgb(156 163 175);
 }
 
 .navbarButton * {
@@ -71,9 +67,7 @@
 .loginBtn {
     height: fit-content;
     border-radius: 9999px;
-    /* Makes it pill-shaped */
     background-color: #634CF3;
-    /* Choose your preferred color */
     color: #fff !important;
     border: none;
     padding-top: .5rem;
@@ -97,6 +91,12 @@
 
 /* media queries */
 
+@media (max-width:1200px) {
+    .navbar {
+        padding: 1.25rem 6%;
+    }
+}
+
 @media(max-width:1023px) {
     .navbtn {
         display: none;
@@ -107,5 +107,19 @@
 
     .sidebarbtn {
         display: block;
+    }
+}
+
+@media(max-width:420px) {
+    .profilePicDiv {
+        gap: 0.5rem;
+    }
+
+    .navbar {
+        padding: 1.25rem 4%;
+    }
+
+    .logoutDisply{
+        display: none;
     }
 }
