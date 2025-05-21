@@ -8,35 +8,34 @@ import BannerCarousel from "../reuseable components/BannerCarousel.jsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SearchEvent from "../reuseable components/SearchEvent.jsx";
-import "./Home.css"
+import "./Home.css";
 
 const Home = () => {
   const { auth } = useAuth();
 
   const apiPrivate = useApiPrivate();
-  const [events, setEvents] = useState();
+  const [events, setEvents] = useState([]);
+  const [lastEventsBanners, setLastEventsBanners] = useState([]);
   const [filter, setFilter] = useState("All");
 
   var isAdmin = false;
 
   useEffect(() => {
     const getAllEvents = async () => {
-      console.log("all:", filter);
       try {
         const response = await apiPrivate.get("/api/event/allEvents");
         setEvents(response.data.allEvents);
+        handleLastEventsBanners(response.data.allEvents.slice().reverse());
       } catch (err) {
         console.log("error in getting all events: ", err);
       }
     };
 
     const getFilteredEvent = async () => {
-      console.log("filtered event", filter);
       try {
         const response = await api.post("/api/event/category", {
           category: filter,
         });
-        console.log("res:", response.data.isFilteredCategory);
         setEvents(response.data.isFilteredCategory);
       } catch (err) {
         console.log("error in getting filtered events: ", err);
@@ -59,15 +58,25 @@ const Home = () => {
   }
 
   const handleFilterEvent = (category) => {
-    console.log("handleFilterEvent: ", category);
     setFilter(category);
+  };
+
+  const handleLastEventsBanners = (bannersArray) => {
+    const lb = [];
+    bannersArray.filter((e, i) => {
+      if (i < 7) {
+        return lb.push(e.banner);
+      }
+    });
+    console.log("lb", lb);
+    setLastEventsBanners(lb);
   };
 
   return (
     <div className="crowdBackground">
       <section className="bannerSection">
         <div className="bannerC">
-          <BannerCarousel />
+          <BannerCarousel recentEventBanners={lastEventsBanners} />
         </div>
       </section>
 
@@ -80,38 +89,41 @@ const Home = () => {
       <section className="events ">
         <div className="eventsDiv">
           {events?.length ? (
-            events.map((event, i) => {
-              if (auth.user.email === "admin03@gmail.com") {
-                isAdmin = true;
-              }
-              return (
-                <Event
-                  key={i}
-                  id={event._id}
-                  name={event.name}
-                  location={event.location}
-                  description={event.description}
-                  host={event.host}
-                  isDeleted={onDeleted}
-                  edit={
-                    isAdmin
-                      ? true
-                      : auth.user.email === event.email
-                      ? true
-                      : false
-                  }
-                  category={event.category}
-                  img={event.banner}
-                  startDate={event.startDate}
-                  startTime={event.startTime}
-                  endDate={event.endDate}
-                  endTime={event.endTime}
-                  price={event.price}
-                  free={event.free}
-                  link={event.link}
-                />
-              );
-            })
+            events
+              .slice()
+              .reverse()
+              .map((event, i) => {
+                if (auth.user.email === "admin03@gmail.com") {
+                  isAdmin = true;
+                }
+                return (
+                  <Event
+                    key={i}
+                    id={event._id}
+                    name={event.name}
+                    location={event.location}
+                    description={event.description}
+                    host={event.host}
+                    isDeleted={onDeleted}
+                    edit={
+                      isAdmin
+                        ? true
+                        : auth.user.email === event.email
+                        ? true
+                        : false
+                    }
+                    category={event.category}
+                    img={event.banner}
+                    startDate={event.startDate}
+                    startTime={event.startTime}
+                    endDate={event.endDate}
+                    endTime={event.endTime}
+                    price={event.price}
+                    free={event.free}
+                    link={event.link}
+                  />
+                );
+              })
           ) : (
             <p>No events on going</p>
           )}

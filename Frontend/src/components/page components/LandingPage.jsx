@@ -90,7 +90,7 @@ const LandingPage = () => {
 
           <div className="eventsDiv">
             {events?.length ? (
-              events.map((event, i) => (
+              events.slice().reverse().map((event, i) => (
                 <Event
                   key={i}
                   id={event._id}

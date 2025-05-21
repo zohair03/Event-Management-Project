@@ -1,12 +1,16 @@
 import useApiPrivate from "../../Hooks/useApiPrivate.jsx";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../Hooks/useAuth.jsx";
+import SelectCategory from "../reuseable components/SelectCategory.jsx";
+import FileUpload from "../reuseable components/FileUpload.jsx";
+import DateAndTime from "../reuseable components/DateAndTime.jsx";
 
 const UpdateEvent = () => {
   const apiPrivate = useApiPrivate();
   const { auth } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const event = location.state;
 
   const [id, setId] = useState(event?.id);
@@ -16,9 +20,7 @@ const UpdateEvent = () => {
   const [banner, setBanner] = useState(event?.img);
   const [category, setcategory] = useState(event?.category);
   const [startDate, setStartDate] = useState(event?.startDate);
-  const [startTime, setStartTime] = useState(event?.startTime);
   const [endDate, setEndDate] = useState(event?.endDate);
-  const [endTime, setEndTime] = useState(event?.endTime);
   const [price, setPrice] = useState(event?.price);
   const [isFree, setIsFree] = useState(event?.free);
   const [eventLink, setEventLink] = useState(event?.link);
@@ -29,39 +31,37 @@ const UpdateEvent = () => {
     name: eventName,
     location: eventLocation,
     description: description,
-    host: auth.user.name,
-    email: auth.user.email,
+    // host: auth.user.name,
+    // email: auth.user.email,
     banner: banner,
     category: category,
     startDate: startDate,
-    startTime: startTime,
     endDate: endDate,
-    endTime: endTime,
     price: price,
     free: isFree,
     link: eventLink,
   };
 
-  const handleFileUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) {
-      return;
-    }
+  // const handleFileUpload = async (e) => {
+  //   const file = e.target.files[0];
+  //   if (!file) {
+  //     return;
+  //   }
 
-    const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", "EventBanners");
-    data.append("cloud_name", "dxtg6bwyq");
-    const response = await fetch(
-      "https://api.cloudinary.com/v1_1/dxtg6bwyq/image/upload",
-      {
-        method: "POST",
-        body: data,
-      }
-    );
-    const uploadedImgUrl = await response.json();
-    setBanner(uploadedImgUrl.url);
-  };
+  //   const data = new FormData();
+  //   data.append("file", file);
+  //   data.append("upload_preset", "EventBanners");
+  //   data.append("cloud_name", "dxtg6bwyq");
+  //   const response = await fetch(
+  //     "https://api.cloudinary.com/v1_1/dxtg6bwyq/image/upload",
+  //     {
+  //       method: "POST",
+  //       body: data,
+  //     }
+  //   );
+  //   const uploadedImgUrl = await response.json();
+  //   setBanner(uploadedImgUrl.url);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,10 +70,51 @@ const UpdateEvent = () => {
         "/api/event/updateEvent",
         updatedEvent
       );
-      setResMsg(response.data.massage);
+      const id = response.data?.newEvent?._id;
+      const category = response.data?.newEvent?.category;
+      setResMsg(response.data.massege);
+      if (response.statusText === "OK") {
+        navigate(`/events/${id}`, {
+          state: { id, category },
+        });
+      }
     } catch (err) {
       console.log("error in update api:", err);
+      setResMsg(err.messege);
     }
+  };
+
+
+  const handleEventBanner = (bannerUrl) => {
+    console.log("banner url: ", bannerUrl);
+    setBanner(bannerUrl);
+  };
+
+  const handleSelectedCategory = (selectedCategory) => {
+    setcategory(selectedCategory);
+  };
+
+  const handleSelectedStartDate = (date) => {
+    const formatted = date.toLocaleString("en-IN", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+    setStartDate(formatted);
+  };
+  const handleSelectedEndDate = (date) => {
+    const formatted = date.toLocaleString("en-IN", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+    setEndDate(formatted);
   };
 
   return (
@@ -101,34 +142,21 @@ const UpdateEvent = () => {
               />
 
               {/* categories */}
-              <input
-                type="text"
-                placeholder="Category"
-                id="category"
-                value={category}
-                required
-                onChange={(e) => {
-                  setcategory(e.target.value);
-                }}
-              />
+              <SelectCategory eventCategory={handleSelectedCategory} />
 
-              {/* textarea  */}
-              <textarea
-                className="description"
-                placeholder="description"
-                id="description"
-                value={description}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              ></textarea>
-
-              {/* event banner */}
-              <div className="dropbox">
-                <input
-                  type="file"
-                  onChange={handleFileUpload}
-                />
+              <div className="textareAndBannerDiv">
+                {/* textarea  */}
+                <textarea
+                  className="description"
+                  placeholder="description"
+                  id="description"
+                  value={description}
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
+                ></textarea>
+                {/* event banner */}
+                <FileUpload eventBanner={handleEventBanner} />
               </div>
 
               {/* location */}
@@ -153,53 +181,25 @@ const UpdateEvent = () => {
               </div>
 
               {/* Date & time of event */}
-              <div className="createGridDate">
+              <div className="createGridDate datetimeinput">
                 <img
                   src="/assets/icons/calendar.svg"
                   alt="calendar"
                   width={24}
                   height={24}
                 />
-                <input
-                  type="date"
-                  value={startDate}
-                  placeholder="Start Date"
-                  onChange={(e) => {
-                    setStartDate(e.target.value);
-                  }}
-                />
-                <input
-                  type="time"
-                  value={startTime}
-                  placeholder="Start Time"
-                  onChange={(e) => {
-                    setStartTime(e.target.value);
-                  }}
-                />
+                <span style={{ whiteSpace: "nowrap" }}>Start Date </span>
+                <DateAndTime selectedDate={handleSelectedStartDate} />
               </div>
-              <div className="createGridDate">
+              <div className="createGridDate datetimeinput">
                 <img
                   src="/assets/icons/calendar.svg"
                   alt="calendar"
                   width={24}
                   height={24}
                 />
-                <input
-                  type="date"
-                  value={endDate}
-                  placeholder="End Date"
-                  onChange={(e) => {
-                    setEndDate(e.target.value);
-                  }}
-                />
-                <input
-                  type="time"
-                  value={endTime}
-                  placeholder="End Time"
-                  onChange={(e) => {
-                    setEndTime(e.target.value);
-                  }}
-                />
+                <span style={{ whiteSpace: "nowrap" }}>End Date </span>
+                <DateAndTime selectedDate={handleSelectedEndDate} />
               </div>
 
               {/* price div */}
@@ -261,7 +261,7 @@ const UpdateEvent = () => {
               </div>
             </div>
             <button type="submit" className="btn">
-              Create Event
+              Update Event
             </button>
           </form>
         </div>

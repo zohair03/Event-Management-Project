@@ -32,19 +32,9 @@ const eventSchema = new Schema(
     },
     startDate: {
       type: String,
-      required: true,
-    },
-    startTime: {
-      type: String,
-      required: true,
     },
     endDate: {
       type: String,
-      required: true,
-    },
-    endTime: {
-      type: String,
-      required: true,
     },
     price: {
       type: String,

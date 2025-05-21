@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 
-const BannerCarousel = () => {
+const BannerCarousel = ({ recentEventBanners }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -17,25 +17,25 @@ const BannerCarousel = () => {
     <div className="banner-carousel">
       <Slider {...settings}>
         <div className="bannerCdiv">
-          <img src="/assets/images/homePageBanners/b1.jpg" alt="" />
+          <img src={recentEventBanners[0]} alt="Banner" />
         </div>
         <div className="bannerCdiv">
-          <img src="/assets/images/homePageBanners/b2.jpg" alt="" />
+          <img src={recentEventBanners[1]} alt="Banner" />
         </div>
         <div className="bannerCdiv">
-          <img src="/assets/images/homePageBanners/b3.jpg" alt="" />
+          <img src={recentEventBanners[2]} alt="Banner" />
         </div>
         <div className="bannerCdiv">
-          <img src="/assets/images/homePageBanners/b4.jpg" alt="" />
+          <img src={recentEventBanners[3]} alt="Banner" />
         </div>
         <div className="bannerCdiv">
-          <img src="/assets/images/homePageBanners/b5.jpg" alt="" />
+          <img src={recentEventBanners[4]} alt="Banner" />
         </div>
         <div className="bannerCdiv">
-          <img src="/assets/images/homePageBanners/d2.jpg" alt="" />
+          <img src={recentEventBanners[5]} alt="Banner" />
         </div>
         <div className="bannerCdiv">
-          <img src="/assets/images/homePageBanners/d1.jpg" alt="" />
+          <img src={recentEventBanners[6]} alt="Banner" />
         </div>
       </Slider>
     </div>

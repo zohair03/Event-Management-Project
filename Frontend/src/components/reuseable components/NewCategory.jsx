@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useApiPrivate from "../../Hooks/useApiPrivate";
+import "./NewCategory.css";
 
 const NewCategoryModal = ({ isOpen, onClose, onAddCategory }) => {
   const [categoryName, setCategoryName] = useState("");
@@ -34,10 +35,19 @@ const NewCategoryModal = ({ isOpen, onClose, onAddCategory }) => {
           onChange={(e) => setCategoryName(e.target.value)}
         />
         <div className="modal-actions">
-          <button type="button" className="add-btn" onClick={handleAdd}>
+          <button
+            type="button"
+            className="add-btn"
+            style={{ height: "2.5rem" }}
+            onClick={handleAdd}
+          >
             Add
           </button>
-          <button className="cancel-btn" onClick={onClose}>
+          <button
+            className="cancel-btn"
+            style={{ height: "2.5rem" }}
+            onClick={onClose}
+          >
             Cancel
           </button>
         </div>

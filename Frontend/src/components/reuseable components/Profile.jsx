@@ -38,7 +38,14 @@ const Profile = () => {
       <section className="headingSection">
         <div>
           <h1>Account</h1>
-          <button className="btn" onClick={()=>{navigate("/updateProfile")}}>Account Settings</button>
+          <button
+            className="btn"
+            onClick={() => {
+              navigate("/updateProfile");
+            }}
+          >
+            Account Settings
+          </button>
         </div>
       </section>
 
@@ -67,7 +74,14 @@ const Profile = () => {
       <section className="headingSection">
         <div>
           <h1>My Tickets</h1>
-          <button className="btn">Explore More Events</button>
+          <button
+            className="btn"
+            onClick={() => {
+              navigate("/home");
+            }}
+          >
+            Explore More Events
+          </button>
         </div>
       </section>
 
@@ -85,7 +99,14 @@ const Profile = () => {
       <section className="headingSection">
         <div>
           <h1>Events organized</h1>
-          <button className="btn">Create New Event</button>
+          <button
+            className="btn"
+            onClick={() => {
+              navigate("/createEvent");
+            }}
+          >
+            Create New Event
+          </button>
         </div>
       </section>
 
@@ -119,6 +140,7 @@ const Profile = () => {
               <>
                 <p>Create your own event !!</p>
                 <button
+                  className="btn"
                   onClick={() => {
                     navigate("/createEvent");
                   }}

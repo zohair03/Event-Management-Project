@@ -1,6 +1,6 @@
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { apiPrivate } from "../../api/axios.js";
-import "./Event.css"
+import "./Event.css";
 
 const Event = ({
   id,
@@ -15,9 +15,7 @@ const Event = ({
   category,
   img,
   startDate,
-  startTime,
-  endDate,
-  endTime,
+  endDate, 
   price,
   free,
   link,
@@ -35,9 +33,7 @@ const Event = ({
         img,
         category,
         startDate,
-        startTime,
         endDate,
-        endTime,
         price,
         free,
         link,
@@ -66,16 +62,13 @@ const Event = ({
 
   return (
     <div className="card">
-      <img
-        className="cardImg"
-        src={img}
-        alt="event banner"
-        onClick={handleClick}
-      />
+      <div className="cardImg">
+        <img src={img} alt="event banner" onClick={handleClick} />
+      </div>
 
       {edit && (
         <div className="cardM">
-          <button  onClick={handleDelete}>
+          <button onClick={handleDelete}>
             <img
               alt="delete"
               loading="lazy"
@@ -85,7 +78,7 @@ const Event = ({
               src="/assets/icons/delete.svg"
             />
           </button>
-          <button  onClick={handleUpdate}>
+          <button onClick={handleUpdate}>
             <img
               alt="edit "
               loading="lazy"
@@ -103,7 +96,7 @@ const Event = ({
           <div className="btn btnPrice">{free ? "Free" : `$${price}`}</div>
           <div className="btn btnGenera">{category}</div>
         </div>
-        <span className="cardTime">{`${startDate} ${startTime}`}</span>
+        <span className="cardTime">{startDate}</span>
         <h4 className="cardTitle" onClick={handleClick}>
           {name}
         </h4>

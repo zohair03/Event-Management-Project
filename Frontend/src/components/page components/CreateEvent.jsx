@@ -18,9 +18,7 @@ const CreateEvent = () => {
   const [banner, setBanner] = useState("");
   const [category, setcategory] = useState("");
   const [startDate, setStartDate] = useState("");
-  const [startTime, setStartTime] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [endTime, setEndTime] = useState("");
   const [price, setPrice] = useState("");
   const [isFree, setIsFree] = useState(false);
   const [eventLink, setEventLink] = useState("");
@@ -35,41 +33,16 @@ const CreateEvent = () => {
     banner: banner,
     category: category,
     startDate: startDate,
-    startTime: startTime,
     endDate: endDate,
-    endTime: endTime,
     price: price,
     free: isFree,
     link: eventLink,
   };
 
-  const handleFileUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) {
-      return;
-    }
-
-    const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", "EventBanners");
-    data.append("cloud_name", "dxtg6bwyq");
-    const response = await fetch(
-      "https://api.cloudinary.com/v1_1/dxtg6bwyq/image/upload",
-      {
-        method: "POST",
-        body: data,
-      }
-    );
-    const uploadedImgUrl = await response.json();
-    setBanner(uploadedImgUrl.url);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("category: ", category);
     try {
       const response = await apiPrivate.post("/api/event/createEvent", event);
-
       const id = response.data?.isCreated?._id;
       const category = response.data?.isCreated?.category;
       setResMsg(response.data.massege);
@@ -81,13 +54,40 @@ const CreateEvent = () => {
       }
     } catch (err) {
       console.log("error in create event api", err);
-      setResMsg(err.message);
+      setResMsg(err.messege);
     }
   };
 
+  const handleEventBanner = (bannerUrl) => {
+    console.log("banner url: ", bannerUrl);
+    setBanner(bannerUrl);
+  };
+
   const handleSelectedCategory = (selectedCategory) => {
-    console.log("selected C:", selectedCategory);
     setcategory(selectedCategory);
+  };
+
+  const handleSelectedStartDate = (date) => {
+    const formatted = date.toLocaleString("en-IN", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+    setStartDate(formatted);
+  };
+  const handleSelectedEndDate = (date) => {
+    const formatted = date.toLocaleString("en-IN", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+    setEndDate(formatted);
   };
 
   return (
@@ -117,19 +117,20 @@ const CreateEvent = () => {
               {/* categories */}
               <SelectCategory eventCategory={handleSelectedCategory} />
 
-              {/* textarea  */}
-              <textarea
-                className="description"
-                placeholder="description"
-                id="description"
-                value={description}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              ></textarea>
-
-              {/* event banner */}
-              <FileUpload />
+              <div className="textareAndBannerDiv">
+                {/* textarea  */}
+                <textarea
+                  className="description"
+                  placeholder="description"
+                  id="description"
+                  value={description}
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
+                ></textarea>
+                {/* event banner */}
+                <FileUpload eventBanner={handleEventBanner} />
+              </div>
 
               {/* location */}
               <div className="CreateGridLocation">
@@ -160,9 +161,8 @@ const CreateEvent = () => {
                   width={24}
                   height={24}
                 />
-
-                <span style={{ "white-space": "nowrap" }}>Start Date </span>
-                <DateAndTime />
+                <span style={{ whiteSpace: "nowrap" }}>Start Date </span>
+                <DateAndTime selectedDate={handleSelectedStartDate} />
               </div>
               <div className="createGridDate datetimeinput">
                 <img
@@ -171,9 +171,8 @@ const CreateEvent = () => {
                   width={24}
                   height={24}
                 />
-
-                <span style={{ "white-space": "nowrap" }}>End Date </span>
-                <DateAndTime />
+                <span style={{ whiteSpace: "nowrap" }}>End Date </span>
+                <DateAndTime selectedDate={handleSelectedEndDate} />
               </div>
 
               {/* price div */}

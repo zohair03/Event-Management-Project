@@ -102,11 +102,16 @@ async function handleUpdateEvent(req, res) {
     if (!isUpdated) {
       return res.status(400).json({ massage: "Error in updating event" });
     }
-
-    res.status(200).json({ massage: `Updated event ${event.name}` });
+    
+    const newEvent = await Event.findOne({_id: event._id})
+    if (!newEvent) {
+      return res.status(400).json({ massege: "Error in updating event" });
+    }
+    
+    res.status(200).json({ massege: `Updated event ${event.name}`, newEvent });
   } catch (err) {
     cosole.log("error in update api: ", err);
-    res.status(500).json({ massage: "Server site error" });
+    res.status(500).json({ massege: "Server site error" });
   }
 }
 
