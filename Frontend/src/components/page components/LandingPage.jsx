@@ -10,44 +10,29 @@ const LandingPage = () => {
   const eventsRef = useRef(null);
 
   const [events, setEvents] = useState([]);
-  const [filter, setFilter] = useState("All");
-
+  
   useEffect(() => {
-    const getAllEvents = async () => {
-      try {
-        const response = await apiPrivate.get("/api/event/allEvents");
-        setEvents(response.data.allEvents);
-      } catch (err) {
-        console.log("error in getting all events: ", err);
-      }
-    };
+    getAllEvents();
+  }, []);
 
-    const getFilteredEvent = async () => {
-      try {
-        const response = await api.post("/api/event/category", {
-          category: filter,
-        });
-        console.log("res:", response.data.isFilteredCategory);
-        setEvents(response.data.isFilteredCategory);
-      } catch (err) {
-        console.log("error in getting filtered events: ", err);
-      }
-    };
-
-    if (filter === "All") {
-      getAllEvents();
-    } else {
-      getFilteredEvent();
+  const getAllEvents = async () => {
+    try {
+      const response = await apiPrivate.get("/api/event/allEvents");
+      setEvents(response.data.allEvents);
+    } catch (err) {
+      console.log("error in getting all events: ", err);
     }
-  }, [filter]);
+  };
 
   const scrollToElement = () => {
     eventsRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleFilterEvent = (category) => {
-    console.log("handleFilterEvent: ", category);
-    setFilter(category);
+  const handleEventsArray = (array) => {
+    if (array === "All") {
+      return getAllEvents();
+    }
+    setEvents(array);
   };
 
   return (
@@ -86,30 +71,33 @@ const LandingPage = () => {
             Trust by <br /> Thousands of Events
           </h2>
 
-          <SearchEvent categorySelected={handleFilterEvent} />
+          <SearchEvent eventsArray={handleEventsArray} />
 
           <div className="eventsDiv">
             {events?.length ? (
-              events.slice().reverse().map((event, i) => (
-                <Event
-                  key={i}
-                  id={event._id}
-                  name={event.name}
-                  location={event.location}
-                  description={event.description}
-                  host={event.host}
-                  edit={false}
-                  category={event.category}
-                  img={event.banner}
-                  startDate={event.startDate}
-                  startTime={event.startTime}
-                  endDate={event.endDate}
-                  endTime={event.endTime}
-                  price={event.price}
-                  free={event.free}
-                  link={event.link}
-                />
-              ))
+              events
+                .slice()
+                .reverse()
+                .map((event, i) => (
+                  <Event
+                    key={i}
+                    id={event._id}
+                    name={event.name}
+                    location={event.location}
+                    description={event.description}
+                    host={event.host}
+                    edit={false}
+                    category={event.category}
+                    img={event.banner}
+                    startDate={event.startDate}
+                    startTime={event.startTime}
+                    endDate={event.endDate}
+                    endTime={event.endTime}
+                    price={event.price}
+                    free={event.free}
+                    link={event.link}
+                  />
+                ))
             ) : (
               <p>No events on going</p>
             )}

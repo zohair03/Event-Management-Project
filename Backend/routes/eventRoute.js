@@ -8,6 +8,7 @@ import {
   handleGetEventbyFilter,
   handleDeleteEvent,
   handleGetRelatedEvent,
+  handleSearchEvent,
 } from "../controllers/eventController.js";
 import { jwtAuthMiddleware } from "../middleware/auth.js";
 import { authorizedRoles } from "../middleware/roles.js";
@@ -19,6 +20,9 @@ router.get("/allEvents", handleGetAllEvents);
 
 // get event by id
 router.post("/eventById/:id", handleGetEventbyId);
+
+// get searched event
+router.post("/search",handleSearchEvent);
 
 // get events by category
 router.get("/relatedEvent/:category", handleGetRelatedEvent);

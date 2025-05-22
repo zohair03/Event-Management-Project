@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import api from "../../api/axios";
-import "./SearchEvent.css"
+import api from "../../api/axios.js";
+import "./SearchEvent.css";
 
-const SearchEvent = ({ categorySelected }) => {
+const SearchEvent = ({ eventsArray }) => {
   const [categories, setCategories] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const [filter, setFilter] = useState();
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
@@ -19,6 +21,30 @@ const SearchEvent = ({ categorySelected }) => {
     };
     getCategories();
   }, []);
+
+  const getSearchedEvent = async (kw) => {
+    try {
+      const response = await api.post("/api/event/search", {
+        query: kw,
+      });
+      console.log("resSD: ", response.data.isSearchedEvent);
+      eventsArray(response.data.isSearchedEvent);
+    } catch (err) {
+      console.log("error in hitting search event api", err);
+    }
+  };
+
+  const getFilteredEvent = async (fil) => {
+    try {
+      const response = await api.post("/api/event/category", {
+        category: fil,
+      });
+      eventsArray(response.data.isFilteredCategory);
+      
+    } catch (err) {
+      console.log("error in getting filtered events: ", err);
+    }
+  };
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -37,8 +63,13 @@ const SearchEvent = ({ categorySelected }) => {
   }, [showDropdown]);
 
   const handleCategoryClick = (category) => {
+    console.log("hcC: ",category)
     setSelectedCategory(category);
-    categorySelected(category);
+    if(category==="All"){
+      return eventsArray(category)
+    }
+    setFilter(category);
+    getFilteredEvent(category);
     setShowDropdown(false);
   };
 
@@ -46,7 +77,15 @@ const SearchEvent = ({ categorySelected }) => {
     <>
       <div className="searchEvent">
         <div>
-          <input type="text" placeholder="Search Events" />
+          <input
+            type="text"
+            placeholder="Search Events"
+            value={keyword}
+            onChange={(e) => {
+              setKeyword(e.target.value);
+              getSearchedEvent(e.target.value);
+            }}
+          />
 
           <div className="dropdown-container" ref={dropdownRef}>
             <div

@@ -14,40 +14,25 @@ const Home = () => {
   const { auth } = useAuth();
 
   const apiPrivate = useApiPrivate();
+
   const [events, setEvents] = useState([]);
   const [lastEventsBanners, setLastEventsBanners] = useState([]);
-  const [filter, setFilter] = useState("All");
 
   var isAdmin = false;
 
   useEffect(() => {
-    const getAllEvents = async () => {
-      try {
-        const response = await apiPrivate.get("/api/event/allEvents");
-        setEvents(response.data.allEvents);
-        handleLastEventsBanners(response.data.allEvents.slice().reverse());
-      } catch (err) {
-        console.log("error in getting all events: ", err);
-      }
-    };
+    getAllEvents();
+  }, []);
 
-    const getFilteredEvent = async () => {
-      try {
-        const response = await api.post("/api/event/category", {
-          category: filter,
-        });
-        setEvents(response.data.isFilteredCategory);
-      } catch (err) {
-        console.log("error in getting filtered events: ", err);
-      }
-    };
-
-    if (filter === "All") {
-      getAllEvents();
-    } else {
-      getFilteredEvent();
+  const getAllEvents = async () => {
+    try {
+      const response = await apiPrivate.get("/api/event/allEvents");
+      setEvents(response.data.allEvents);
+      handleLastEventsBanners(response.data.allEvents.slice().reverse());
+    } catch (err) {
+      console.log("error in getting all events: ", err);
     }
-  }, [filter]);
+  };
 
   function onDeleted(id) {
     setEvents((preValue) => {
@@ -57,8 +42,11 @@ const Home = () => {
     });
   }
 
-  const handleFilterEvent = (category) => {
-    setFilter(category);
+  const handleEventsArray = (array) => {
+    if (array === "All") {
+      return getAllEvents();
+    }
+    setEvents(array);
   };
 
   const handleLastEventsBanners = (bannersArray) => {
@@ -68,7 +56,6 @@ const Home = () => {
         return lb.push(e.banner);
       }
     });
-    console.log("lb", lb);
     setLastEventsBanners(lb);
   };
 
@@ -82,7 +69,7 @@ const Home = () => {
 
       <section className="homePageEventSearch">
         <div className="homePageEventSearchDiv">
-          <SearchEvent categorySelected={handleFilterEvent} />
+          <SearchEvent eventsArray={handleEventsArray} />
         </div>
       </section>
 
