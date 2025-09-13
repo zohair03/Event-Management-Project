@@ -1,0 +1,92 @@
+#ordersPageMainDiv {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.ordersection {
+    padding: 0 9%;
+}
+
+#searchOrder {
+    width: 100%;
+    background-color: #F3F3F3;
+    padding: 15px 20px;
+    border-style: none;
+    border-radius: 3rem;
+    margin: 0;
+    font-size: 14px;
+    margin: 50px 0;
+}
+
+.ordersTable {
+    display: flex;
+    flex-direction: column;
+}
+
+.ordersHead {
+    display: flex;
+    width: 100%;
+    color: rgb(75 85 99);
+    font-weight: 600;
+    padding: 15px 0;
+    font-size: 14px;
+}
+
+.noOrdersDiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+}
+
+.ordersHead>div:nth-child(1) {
+    width: 25%;
+}
+
+.ordersHead>div:nth-child(2) {
+    width: 25%;
+}
+
+.ordersHead>div:nth-child(3) {
+    width: 20%;
+}
+
+.ordersHead>div:nth-child(4) {
+    width: 20%;
+}
+
+.ordersHead>div:nth-child(5) {
+    width: 10%;
+}
+
+.ordersBody {
+    display: flex;
+    width: 100%;
+    font-weight: 600;
+    color: rgb(37, 37, 37);
+    padding: 15px 0;
+    font-size: 14px;
+}
+
+.ordersBody>div:nth-child(1) {
+    width: 25%;
+    color: #624CF5;
+}
+
+.ordersBody>div:nth-child(2) {
+    width: 25%;
+}
+
+.ordersBody>div:nth-child(3) {
+    width: 20%;
+}
+
+.ordersBody>div:nth-child(4) {
+    width: 20%;
+}
+
+.ordersBody>div:nth-child(5) {
+    width: 10%;
+}

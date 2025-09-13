@@ -1,5 +1,6 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth.jsx";
+import "./Layout.css";
 
 
 const RequiredAuth = ({ allowedRoles }) => {
@@ -7,7 +8,7 @@ const RequiredAuth = ({ allowedRoles }) => {
   const { auth, loading } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
   return allowedRoles.includes(auth?.user?.role) ? (

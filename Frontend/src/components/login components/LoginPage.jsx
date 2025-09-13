@@ -10,6 +10,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+  const eventState = location.state?.from || {};
 
   const emailRef = useRef();
 
@@ -40,6 +41,7 @@ const LoginPage = () => {
       const accessToken = response.data.accessToken;
       login(accessToken, user);
       navigate(from, { replace: true });
+
     } catch (err) {
       console.log("error in login api: ", err);
       setResMsg(err?.message);
@@ -51,7 +53,7 @@ const LoginPage = () => {
       <div className="login">
         <h1 className="loginH1">Login</h1>
         <span className="loginMsg">{resMsg}</span>
-        
+
         <div className="loginForm">
           <form onSubmit={handleSubmit}>
             <label htmlFor="email">Email</label>
@@ -63,6 +65,7 @@ const LoginPage = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="email"
+              autoComplete="auto"
             />
             <label htmlFor="password">Password</label>
             <input

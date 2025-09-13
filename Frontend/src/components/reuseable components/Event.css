@@ -45,6 +45,11 @@
     -webkit-box-orient: vertical;
 }
 
+.cardTitle a {
+    text-decoration: none;
+    color: black;
+}
+
 .cardPrice {
     display: flex;
     align-items: center;
@@ -58,6 +63,32 @@
     font-size: 16px;
     line-height: 20px;
     height: 1.25rem;
+}
+
+.cardHostName {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.cardHostName a {
+    text-decoration: none;
+}
+
+.cardHostName div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2px;
+}
+
+#hostName {
+    color: rgb(75 85 99);
+    font-weight: 600;
+}
+
+#orders {
+    color: #634CF3;
 }
 
 .cardM {
@@ -97,7 +128,6 @@
 
 .btnGenera {
     color: #757579 !important;
-
 }
 
 @media(max-width:1645px) {
@@ -107,6 +137,6 @@
         flex-direction: column;
         border-radius: 0.75rem;
         box-shadow: 0 2px 4px -1px #999;
-        
+
     }
 }

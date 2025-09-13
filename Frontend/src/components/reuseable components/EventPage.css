@@ -187,6 +187,9 @@
     height: inherit;
 }
 
+
+
+
 @media(max-width:1535px) {
     .eventPage {
         margin-left: 0;

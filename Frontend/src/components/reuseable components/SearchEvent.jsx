@@ -27,7 +27,6 @@ const SearchEvent = ({ eventsArray }) => {
       const response = await api.post("/api/event/search", {
         query: kw,
       });
-      console.log("resSD: ", response.data.isSearchedEvent);
       eventsArray(response.data.isSearchedEvent);
     } catch (err) {
       console.log("error in hitting search event api", err);

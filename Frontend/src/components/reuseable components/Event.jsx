@@ -15,7 +15,7 @@ const Event = ({
   category,
   img,
   startDate,
-  endDate, 
+  endDate,
   price,
   free,
   link,
@@ -54,16 +54,22 @@ const Event = ({
   };
 
   const handleClick = () => {
-    navigate(`/events/${id}`, {
+    navigate(`/events/${id}/${category}`, {
       state: { id, category },
     });
     isClicked();
   };
 
+  const handleGetOrders = async () => {
+    navigate("/orders");
+  };
+
   return (
     <div className="card">
       <div className="cardImg">
-        <img src={img} alt="event banner" onClick={handleClick} />
+        <a href="">
+          <img src={img} alt="event banner" onClick={handleClick} />
+        </a>
       </div>
 
       {edit && (
@@ -93,15 +99,29 @@ const Event = ({
 
       <div className="cardDetails">
         <div className="cardPrice">
-          <div className="btn btnPrice">{free ? "Free" : `$${price}`}</div>
+          <div className="btn btnPrice">{free ? "Free" : `RM ${price}`}</div>
           <div className="btn btnGenera">{category}</div>
         </div>
         <span className="cardTime">{startDate}</span>
         <h4 className="cardTitle" onClick={handleClick}>
-          {name}
+          <a href="">{name}</a>
         </h4>
-        <div>
-          <span>{host}</span>
+        <div className="cardHostName">
+          <span id="hostName">{host}</span>
+          {edit && (
+            <a href="">
+              <div onClick={handleGetOrders}>
+                <span id="orders">Orders Details</span>
+                <img
+                  loading="lazy"
+                  alt="new page"
+                  src="/assets/icons/arrow outward.svg"
+                  width="18"
+                  height="18"
+                />
+              </div>
+            </a>
+          )}
         </div>
       </div>
     </div>

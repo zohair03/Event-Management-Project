@@ -3,6 +3,7 @@ import useApiPrivate from "../../Hooks/useApiPrivate.jsx";
 import Event from "./Event.jsx";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth.jsx";
+import Pagination from "./Pagination.jsx";
 import "./Profile.css";
 
 const Profile = () => {
@@ -11,6 +12,9 @@ const Profile = () => {
   const { auth } = useAuth();
 
   const [events, setEvents] = useState();
+  const [purchasedEvents, setPurchasedEvents] = useState();
+  const [currentPage, setCurrentPage] = useState(0);
+  const [lastPage, setLastPage] = useState(6);
 
   useEffect(() => {
     const getEvents = async () => {
@@ -21,7 +25,20 @@ const Profile = () => {
         console.log("error in getting all events: ", err);
       }
     };
+
+    const getPurchasedEvents = async () => {
+      try {
+        const response = await apiPrivate.post("/api/event/purchasedEvents", {
+          userId: auth.user._id,
+        });
+        setPurchasedEvents(response.data.userPurchasedEvents);
+      } catch (err) {
+        console.log("Error in Purchased Event API: ", err);
+      }
+    };
+
     getEvents();
+    getPurchasedEvents();
   }, []);
 
   function onDeleted(id) {
@@ -31,6 +48,16 @@ const Profile = () => {
       });
     });
   }
+
+  const scrollToElement = () => {
+    eventsRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handlePage = (startIndex, lastIndex) => {
+    scrollToElement();
+    setCurrentPage(startIndex);
+    setLastPage(lastIndex);
+  };
 
   return (
     <>
@@ -86,13 +113,48 @@ const Profile = () => {
       </section>
 
       {/* tickets */}
-      <section className="">
-        <div className="tickets">
-          <h3 className="ticketsH1">No Events Tickets Purchased Yet</h3>
-          <h3 className="ticketsH2">
-            No Worries Plenty Of Exciting Events To Explore
-          </h3>
-        </div>
+      <section>
+        {purchasedEvents?.length ? (
+          <div className="events">
+            <div className="eventsDiv">
+              {purchasedEvents?.length ? (
+                purchasedEvents.map((event, i) => (
+                  <Event
+                    key={i}
+                    id={event._id}
+                    name={event.name}
+                    location={event.location}
+                    description={event.description}
+                    host={event.host}
+                    edit={true}
+                    isDeleted={onDeleted}
+                    category={event.category}
+                    img={event.banner}
+                    startDate={event.startDate}
+                    startTime={event.startTime}
+                    endDate={event.endDate}
+                    endTime={event.endTime}
+                    price={event.price}
+                    free={event.free}
+                    link={event.link}
+                  />
+                ))
+              ) : (
+                <></>
+              )}
+            </div>
+            <Pagination
+              arrayLenth={events?.length}
+              numberOfPost={6}
+              index={handlePage}
+            />
+          </div>
+        ) : (
+          <div className="tickets">
+            <h3 className="ticketsH1">No Events Tickets Purchased Yet</h3>
+            <h3 className="ticketsH2">No Worries Plenty Of Exciting Events To Explore</h3>
+          </div>
+        )}
       </section>
 
       {/* heading */}
@@ -150,6 +212,11 @@ const Profile = () => {
               </>
             )}
           </div>
+          <Pagination
+            arrayLenth={events?.length}
+            numberOfPost={6}
+            index={handlePage}
+          />
         </div>
       </section>
     </>

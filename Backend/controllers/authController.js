@@ -62,10 +62,12 @@ async function handleSignUp(req, res) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     if (!hashedPassword) {
-      return res.status(400).json({ massege: "Error in password hashing type" });
+      return res
+        .status(400)
+        .json({ massege: "Error in password hashing type" });
     }
 
-    await User.create({
+    const isSignUp = await User.create({
       name,
       lastName,
       email,
@@ -74,6 +76,9 @@ async function handleSignUp(req, res) {
       role: "user",
       profilePic,
     });
+    if (!isSignUp) {
+      res.status(403).json({ massege: "Error in creating user" });
+    }
 
     res.status(200).json({ massege: "User Created Successfully" });
   } catch (err) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Event from "../reuseable components/Event.jsx";
 import useApiPrivate from "../../Hooks/useApiPrivate.jsx";
@@ -8,16 +8,20 @@ import BannerCarousel from "../reuseable components/BannerCarousel.jsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SearchEvent from "../reuseable components/SearchEvent.jsx";
+import Pagination from "../reuseable components/Pagination.jsx";
 import "./Home.css";
 
 const Home = () => {
   const { auth } = useAuth();
 
+  const eventsRef = useRef(null);
+
   const apiPrivate = useApiPrivate();
 
   const [events, setEvents] = useState([]);
   const [lastEventsBanners, setLastEventsBanners] = useState([]);
-
+  const [currentPage, setCurrentPage] = useState(0);
+  const [lastPage, setLastPage] = useState(6);
   var isAdmin = false;
 
   useEffect(() => {
@@ -51,12 +55,32 @@ const Home = () => {
 
   const handleLastEventsBanners = (bannersArray) => {
     const lb = [];
+    var banObj = {};
     bannersArray.filter((e, i) => {
+      banObj = {
+        id: e._id,
+        cat: e.category,
+        eBan: e.banner,
+        eName: e.name,
+        eHost: e.host,
+        eStartDate: e.startDate,
+        eLocation: e.location,
+      };
       if (i < 7) {
-        return lb.push(e.banner);
+        return lb.push(banObj);
       }
     });
     setLastEventsBanners(lb);
+  };
+
+  const scrollToElement = () => {
+    eventsRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handlePage = (startIndex, lastIndex) => {
+    scrollToElement();
+    setCurrentPage(startIndex);
+    setLastPage(lastIndex);
   };
 
   return (
@@ -74,11 +98,12 @@ const Home = () => {
       </section>
 
       <section className="events ">
-        <div className="eventsDiv">
+        <div ref={eventsRef} className="eventsDiv">
           {events?.length ? (
             events
               .slice()
               .reverse()
+              .slice(currentPage, lastPage)
               .map((event, i) => {
                 if (auth.user.email === "admin03@gmail.com") {
                   isAdmin = true;
@@ -115,6 +140,11 @@ const Home = () => {
             <p>No events on going</p>
           )}
         </div>
+        <Pagination
+          arrayLenth={events?.length}
+          numberOfPost={6}
+          index={handlePage}
+        />
       </section>
     </div>
   );

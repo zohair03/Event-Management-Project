@@ -16,6 +16,9 @@ import PublicRoute from "./components/routes components/PublicRoute.jsx";
 import UserEvents from "./components/reuseable components/Profile.jsx";
 import EventPage from "./components/reuseable components/EventPage.jsx";
 import UpdateProfile from "./components/page components/UpdateProfile.jsx";
+import SuccessPage from "./components/reuseable components/SuccessPage.jsx";
+import FailedPage from "./components/reuseable components/FailedPage.jsx";
+import OrdersPage from "./components/page components/OrdersPage.jsx";
 
 function App() {
   return (
@@ -35,6 +38,9 @@ function App() {
           <Route path="/updateEvent" element={<UpdateEvent />} />
           <Route path="/profile" element={<UserEvents />} />
           <Route path="/updateProfile" element={<UpdateProfile />} />
+          <Route path="/orders" element={<OrdersPage/>} />
+          <Route path="/success" element={<SuccessPage />} />
+          <Route path="/failed" element={<FailedPage />} />
         </Route>
 
         {/* Only admin */}
@@ -42,7 +48,7 @@ function App() {
           <Route path="/allUsers" element={<AllUsers />} />
         </Route>
 
-        <Route path="/events/:id" element={<EventPage />} />
+        <Route path="/events/:id/:category" element={<EventPage />} />
         <Route path="/unAuthorized" element={<UnAuthorized />} />
         <Route path="*" element={<NotFound />} />
       </Route>

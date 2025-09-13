@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import "./Layout.css";
 
 const NotFound = () => {
-  return (
-    <div>404 page not found</div>
-  )
-}
+  return <div className="pageMsg">404 page not found</div>;
+};
 
-export default NotFound
+export default NotFound;

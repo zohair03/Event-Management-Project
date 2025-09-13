@@ -7,6 +7,11 @@ import auth from "./routes/authRoute.js";
 import eventRoute from "./routes/eventRoute.js";
 import userRoute from "./routes/userRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
+import paymentRoute from "./routes/paymentRoute.js";
+import orderRoute from "./routes/orderRoute.js";
+import { handleWebhook } from "./controllers/paymentController.js";
+import { jwtAuthMiddleware } from "./middleware/auth.js";
+import { authorizedRoles } from "./middleware/roles.js";
 import mongoose from "mongoose";
 
 const app = express();
@@ -24,6 +29,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
+app.post("/api/payment/webhook", jwtAuthMiddleware, authorizedRoles("admin","user"), express.raw({ type: "application/json" }), handleWebhook);
 app.use(express.json());
 app.use((req, res, next) => {
   if (mongoose.connection.readyState !== 1) {
@@ -31,11 +37,13 @@ app.use((req, res, next) => {
   }
   next();
 });
-
 app.use("/api/auth", auth);
 app.use("/api/user", userRoute);
 app.use("/api/event", eventRoute);
 app.use("/api/category", categoryRoute);
+app.use("/api/payment", paymentRoute);
+app.use("/api/orders", orderRoute);
+
 
 connectMongoDB(process.env.MONGO_URI);
 

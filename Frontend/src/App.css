@@ -92,7 +92,7 @@ body {
     white-space: nowrap;
     height: 2.5rem;
     text-decoration: inherit;
-
+    cursor: pointer;
 }
 
 .btnPrice {
@@ -496,8 +496,7 @@ select {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    margin-left: 9%;
-    margin-right: 9%;
+    margin: 9% 9%;
 }
 
 .headingSection div button {

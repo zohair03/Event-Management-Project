@@ -74,7 +74,7 @@ const UpdateEvent = () => {
       const category = response.data?.newEvent?.category;
       setResMsg(response.data.massege);
       if (response.statusText === "OK") {
-        navigate(`/events/${id}`, {
+        navigate(`/events/${id}/${category}`, {
           state: { id, category },
         });
       }

@@ -1,5 +1,6 @@
 import { Event } from "../models/eventModel.js";
 import { Category } from "../models/categoryModel.js";
+import { PurchasedEvents } from "../models/ticketModel.js";
 import mongoose from "mongoose";
 import { ObjectId } from "mongodb";
 
@@ -95,6 +96,31 @@ async function handleCreateEvent(req, res) {
       .json({ massege: "Event created successfully !!", isCreated });
   } catch (err) {
     console.log("Error in create event api: ", err);
+    res.status(500).json({ massege: "Internal sever error" });
+  }
+}
+
+async function handlePurchasedEvents(req, res) {
+  try{
+    const userId = req.body.userId;
+    if (!userId) {
+      return res.status(401).json({ massege: "UserId is not valid" });
+    }
+
+    const purchasedEventIds = await PurchasedEvents.findOne({user_id: userId},{purchasedEvents_ids: 1, _id: 0})
+    if(!purchasedEventIds){
+      return res.status(200).json({ massege: "Not purchased any events" });
+    }
+    
+    const purchasedEvents = await Event.find({_id: {$in: purchasedEventIds.purchasedEvents_ids}});
+    if(!purchasedEvents){
+      return res.status(401).json({ massege: "Error in finding purchased events" });
+    }
+
+    res.status(200).json({userPurchasedEvents: purchasedEvents});
+
+  } catch (err) {
+    console.log("Error in getting purchased Events: ", err);
     res.status(500).json({ massege: "Internal sever error" });
   }
 }
@@ -215,4 +241,5 @@ export {
   handleDeleteEvent,
   handleGetRelatedEvent,
   handleSearchEvent,
+  handlePurchasedEvents,
 };

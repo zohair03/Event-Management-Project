@@ -9,6 +9,7 @@ import {
   handleDeleteEvent,
   handleGetRelatedEvent,
   handleSearchEvent,
+  handlePurchasedEvents,
 } from "../controllers/eventController.js";
 import { jwtAuthMiddleware } from "../middleware/auth.js";
 import { authorizedRoles } from "../middleware/roles.js";
@@ -21,6 +22,9 @@ router.get("/allEvents", handleGetAllEvents);
 // get event by id
 router.post("/eventById/:id", handleGetEventbyId);
 
+// events purchased by user
+router.post("/purchasedEvents", jwtAuthMiddleware, authorizedRoles("admin","user"), handlePurchasedEvents);
+
 // get searched event
 router.post("/search",handleSearchEvent);
 
@@ -28,7 +32,7 @@ router.post("/search",handleSearchEvent);
 router.get("/relatedEvent/:category", handleGetRelatedEvent);
 
 // users own events
-router.get("/myEvents",jwtAuthMiddleware, authorizedRoles("admin","user"), handleGetMyEvents);
+router.get("/myEvents", jwtAuthMiddleware, authorizedRoles("admin","user"), handleGetMyEvents);
 
 // Search event by filter
 router.post("/category", handleGetEventbyFilter);

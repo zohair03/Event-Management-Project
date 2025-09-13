@@ -18,12 +18,23 @@
     margin-right: 9%;
 }
 
-.bannerCdiv img {
+
+
+/* .bannerCdiv img {
     border-radius: 0.75rem;
     height: 500px;
     width: 100%;
     object-fit: cover;
-}
+} */
+
+/* .innerBannerCdiv {
+    border-radius: 0.75rem;
+    height: 500px;
+    width: 100%;
+    object-fit: cover;
+} */
+
+
 
 .homePageEventSearch {
     margin-top: 3rem;
@@ -45,10 +56,6 @@
         padding-top: 0;
         margin-left: 0;
         margin-right: 0;
-    }
-
-    .bannerCdiv img {
-        border-radius: 0;
     }
 
     .homePageEventSearchDiv {

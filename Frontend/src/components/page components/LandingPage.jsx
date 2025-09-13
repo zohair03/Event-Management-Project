@@ -4,13 +4,16 @@ import useApiPrivate from "../../Hooks/useApiPrivate.jsx";
 import api from "../../api/axios.js";
 import SearchEvent from "../reuseable components/SearchEvent.jsx";
 import "./LandingPage.css";
+import Pagination from "../reuseable components/Pagination.jsx";
 
 const LandingPage = () => {
   const apiPrivate = useApiPrivate();
   const eventsRef = useRef(null);
 
   const [events, setEvents] = useState([]);
-  
+  const [currentPage, setCurrentPage] = useState(0);
+  const [lastPage, setLastPage] = useState(6);
+
   useEffect(() => {
     getAllEvents();
   }, []);
@@ -33,6 +36,12 @@ const LandingPage = () => {
       return getAllEvents();
     }
     setEvents(array);
+  };
+
+  const handlePage = (startIndex, lastIndex) => {
+    scrollToElement();
+    setCurrentPage(startIndex);
+    setLastPage(lastIndex);
   };
 
   return (
@@ -78,6 +87,7 @@ const LandingPage = () => {
               events
                 .slice()
                 .reverse()
+                .slice(currentPage, lastPage)
                 .map((event, i) => (
                   <Event
                     key={i}
@@ -102,6 +112,11 @@ const LandingPage = () => {
               <p>No events on going</p>
             )}
           </div>
+          <Pagination
+            arrayLenth={events?.length}
+            numberOfPost={6}
+            index={handlePage}
+          />
         </div>
       </section>
     </>

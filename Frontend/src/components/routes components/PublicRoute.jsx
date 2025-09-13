@@ -1,5 +1,6 @@
 import useAuth from "../../Hooks/useAuth";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import "./Layout.css";
 
 const PublicRoute = () => {
   const { auth, loading } = useAuth();
@@ -7,7 +8,7 @@ const PublicRoute = () => {
   const from = location.state?.from?.pathname || "/home";
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
   if (auth?.user) {
