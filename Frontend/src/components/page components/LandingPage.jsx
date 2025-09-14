@@ -109,7 +109,9 @@ const LandingPage = () => {
                   />
                 ))
             ) : (
-              <p>No events on going</p>
+              <p style={{ display: "flex", justifyContent: "center" }}>
+                No events on going
+              </p>
             )}
           </div>
           <Pagination

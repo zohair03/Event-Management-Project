@@ -75,6 +75,7 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="password"
+              autocomplete="off"
             />
             <button type="Submit" className="btn">
               Login

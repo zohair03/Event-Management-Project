@@ -72,6 +72,7 @@ const SignUpPage = () => {
                 <input
                   placeholder="name"
                   type="text"
+                  autocomplete="off"
                   value={name}
                   required
                   onChange={(e) => {
@@ -84,6 +85,7 @@ const SignUpPage = () => {
                 <label>Last name</label>
                 <input
                   placeholder="last name"
+                  autocomplete="off"
                   type="text"
                   value={lastName}
                   onChange={(e) => {
@@ -96,6 +98,7 @@ const SignUpPage = () => {
                 <label>User Name</label>
                 <input
                   placeholder="user name"
+                  autocomplete="off"
                   type="text"
                   value={username}
                   required
@@ -109,6 +112,7 @@ const SignUpPage = () => {
                 <label>Password</label>
                 <input
                   placeholder="******"
+                  autocomplete="off"
                   type="text"
                   value={password}
                   required
@@ -122,6 +126,7 @@ const SignUpPage = () => {
                 <label>Email</label>
                 <input
                   placeholder="email"
+                  autocomplete="off"
                   type="text"
                   value={email}
                   required

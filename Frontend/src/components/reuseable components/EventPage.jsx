@@ -91,15 +91,19 @@ const EventPage = () => {
     } else {
       navigate("/login", {
         state: {
-          from: { pathname: `/events/${id}/${category}`, id: id, category: category },
+          from: {
+            pathname: `/events/${id}/${category}`,
+            id: id,
+            category: category,
+          },
         },
       });
     }
   };
 
-  const checkOrders = () =>{
+  const checkOrders = () => {
     navigate("/orders");
-  }
+  };
 
   return (
     <>
@@ -115,14 +119,17 @@ const EventPage = () => {
               <h2>{seletedEvent.name}</h2>
               <div className="eventPageTitleDiv">
                 <div className="eventPageTitleDivF">
-                  <div className=" btnPriceEventsPage">
+                  <div
+                    className=" btnPriceEventsPage"
+                    style={{ whiteSpace: "nowrap" }}
+                  >
                     {seletedEvent.free ? "Free" : `RM ${seletedEvent.price}`}
                   </div>
                   <div className=" btnGeneraEventsPage">
                     {seletedEvent.category}
                   </div>
                 </div>
-                <p>
+                <p style={{ whiteSpace: "nowrap" }}>
                   By{" "}
                   <span
                     style={{
@@ -137,7 +144,9 @@ const EventPage = () => {
 
             <div className="eventPageTicket">
               {seletedEvent.email === auth?.user?.email ? (
-                <button onClick={checkOrders} className="btn getTbtn">Check Orders</button>
+                <button onClick={checkOrders} className="btn getTbtn">
+                  Check Orders
+                </button>
               ) : seletedEvent.free ? (
                 <div></div>
               ) : (
@@ -239,7 +248,9 @@ const EventPage = () => {
                   );
                 })
             ) : (
-              <p>No events on going</p>
+              <p style={{ display: "flex", justifyContent: "center" }}>
+                No events on going
+              </p>
             )}
           </div>
           <Pagination

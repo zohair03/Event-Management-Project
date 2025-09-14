@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import { updatePurchasedEventsDB } from "../middleware/updatePurchasedEventsDB.js";
 import { updateOrdersDB } from "../middleware/updateOrdersDB.js";
 
+// stripe listen --forward-to localhost:3000/api/payment/webhook
+
 dotenv.config();
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
@@ -34,7 +36,7 @@ const handleWebhook = async (req, res) => {
         // if (!mongoose.Types.ObjectId.isValid(session?.metadata?.userId)) {
         //   return res.status(400).json({ message: "Invalid User ID format" });
         // }
-
+        console.log("checkout session completed!!!")
         updatePurchasedEventsDB(userId, eventId);
         updateOrdersDB(orderId, eventHostEmail, userId, eventId, eventTitle, buyer, amount);
 

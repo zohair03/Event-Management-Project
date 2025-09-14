@@ -226,6 +226,10 @@
     .eventPagetimeloc {
         gap: 0.5rem;
     }
+
+    .eventPageBanner{
+        max-width: 100%;
+    }
 }
 
 @media(max-width:640px) {

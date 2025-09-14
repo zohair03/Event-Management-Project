@@ -29,7 +29,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
-app.post("/api/payment/webhook", jwtAuthMiddleware, authorizedRoles("admin","user"), express.raw({ type: "application/json" }), handleWebhook);
+app.post("/api/payment/webhook", express.raw({ type: "application/json" }), handleWebhook);
 app.use(express.json());
 app.use((req, res, next) => {
   if (mongoose.connection.readyState !== 1) {

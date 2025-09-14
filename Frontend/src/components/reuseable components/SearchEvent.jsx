@@ -62,7 +62,7 @@ const SearchEvent = ({ eventsArray }) => {
   }, [showDropdown]);
 
   const handleCategoryClick = (category) => {
-    console.log("hcC: ",category)
+    
     setSelectedCategory(category);
     if(category==="All"){
       return eventsArray(category)
