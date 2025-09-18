@@ -36,31 +36,37 @@ const OrdersPage = () => {
         <div>
           <input id="searchOrder" placeholder="Search orders..." />
         </div>
-        <div className="ordersDiv">
-          <div className="ordersTable">
-            <div className="ordersHead">
-              <div>Order ID</div>
-              <div>Event Title</div>
-              <div>Buyers</div>
-              <div>Created</div>
-              <div>Amount</div>
-            </div>
-            {orders?.length ? (
-              orders.map((order, i) => {
-                return (
-                  <div className="ordersBody" key={i}>
-                    <div>{order.order_id}</div>
-                    <div>{order.eventTitle}</div>
-                    <div>{order.buyer}</div>
-                    <div>{order.createdAt}</div>
-                    <div>{order.amount}</div>
-                  </div>
-                );
-              })
-            ) : (
-              <div className="noOrdersDiv">No Orders yet</div>
-            )}
-          </div>
+        <div className="ordersContainer">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Event Title</th>
+                <th>Buyers</th>
+                <th>Created</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders?.length ? (
+                orders.map((order, i) => {
+                  return (
+                    <>
+                      <tr key={i}>
+                        <td className="ordersID">{order.order_id}</td>
+                        <td>{order.eventTitle}</td>
+                        <td>{order.buyer}</td>
+                        <td>{order.createdAt}</td>
+                        <td>{order.amount}</td>
+                      </tr>
+                    </>
+                  );
+                })
+              ) : (
+                <div className="noOrdersDiv">No Orders yet</div>
+              )}
+            </tbody>
+          </table>
         </div>
       </section>
     </div>

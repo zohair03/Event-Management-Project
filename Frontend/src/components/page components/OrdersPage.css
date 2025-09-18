@@ -7,10 +7,11 @@
 
 .ordersection {
     padding: 0 9%;
+    height: 70vh;
 }
 
 #searchOrder {
-    width: 100%;
+    width: 95%;
     background-color: #F3F3F3;
     padding: 15px 20px;
     border-style: none;
@@ -20,73 +21,30 @@
     margin: 50px 0;
 }
 
-.ordersTable {
+.ordersContainer {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
-.ordersHead {
-    display: flex;
-    width: 100%;
+th {
+    text-align: left;
     color: rgb(75 85 99);
     font-weight: 600;
-    padding: 15px 0;
     font-size: 14px;
+    padding: 0.5rem;
+    white-space: nowrap;
 }
 
-.noOrdersDiv{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 50px 0;
-}
-
-.ordersHead>div:nth-child(1) {
-    width: 25%;
-}
-
-.ordersHead>div:nth-child(2) {
-    width: 25%;
-}
-
-.ordersHead>div:nth-child(3) {
-    width: 20%;
-}
-
-.ordersHead>div:nth-child(4) {
-    width: 20%;
-}
-
-.ordersHead>div:nth-child(5) {
-    width: 10%;
-}
-
-.ordersBody {
-    display: flex;
-    width: 100%;
+td {
+    padding: 1rem;
+    font-size: 14px;
     font-weight: 600;
     color: rgb(37, 37, 37);
-    padding: 15px 0;
-    font-size: 14px;
+    white-space: nowrap;
 }
 
-.ordersBody>div:nth-child(1) {
-    width: 25%;
+.ordersID {
     color: #624CF5;
-}
-
-.ordersBody>div:nth-child(2) {
-    width: 25%;
-}
-
-.ordersBody>div:nth-child(3) {
-    width: 20%;
-}
-
-.ordersBody>div:nth-child(4) {
-    width: 20%;
-}
-
-.ordersBody>div:nth-child(5) {
-    width: 10%;
 }

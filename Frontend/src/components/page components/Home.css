@@ -5,6 +5,7 @@
     background-size: contain, contain, cover;
     background-position: bottom, top, top;
     background-attachment: fixed, scroll;
+    min-height: 100vh;
 }
 
 .bannerSection {

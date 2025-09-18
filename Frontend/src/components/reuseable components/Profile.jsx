@@ -15,6 +15,7 @@ const Profile = () => {
   const [purchasedEvents, setPurchasedEvents] = useState();
   const [currentPage, setCurrentPage] = useState(0);
   const [lastPage, setLastPage] = useState(6);
+  var isAdmin = false;
 
   useEffect(() => {
     const getEvents = async () => {
@@ -118,27 +119,38 @@ const Profile = () => {
           <div className="events">
             <div className="eventsDiv">
               {purchasedEvents?.length ? (
-                purchasedEvents.map((event, i) => (
-                  <Event
-                    key={i}
-                    id={event._id}
-                    name={event.name}
-                    location={event.location}
-                    description={event.description}
-                    host={event.host}
-                    edit={true}
-                    isDeleted={onDeleted}
-                    category={event.category}
-                    img={event.banner}
-                    startDate={event.startDate}
-                    startTime={event.startTime}
-                    endDate={event.endDate}
-                    endTime={event.endTime}
-                    price={event.price}
-                    free={event.free}
-                    link={event.link}
-                  />
-                ))
+                purchasedEvents.map((event, i) => {
+                  if (auth.user.email === "admin03@gmail.com") {
+                    isAdmin = true;
+                  }
+                  return (
+                    <Event
+                      key={i}
+                      id={event._id}
+                      name={event.name}
+                      location={event.location}
+                      description={event.description}
+                      host={event.host}
+                      edit={
+                        isAdmin
+                          ? true
+                          : auth.user.email === event.email
+                          ? true
+                          : false
+                      }
+                      isDeleted={onDeleted}
+                      category={event.category}
+                      img={event.banner}
+                      startDate={event.startDate}
+                      startTime={event.startTime}
+                      endDate={event.endDate}
+                      endTime={event.endTime}
+                      price={event.price}
+                      free={event.free}
+                      link={event.link}
+                    />
+                  );
+                })
               ) : (
                 <></>
               )}
@@ -152,7 +164,9 @@ const Profile = () => {
         ) : (
           <div className="tickets">
             <h3 className="ticketsH1">No Events Tickets Purchased Yet</h3>
-            <h3 className="ticketsH2">No Worries Plenty Of Exciting Events To Explore</h3>
+            <h3 className="ticketsH2">
+              No Worries Plenty Of Exciting Events To Explore
+            </h3>
           </div>
         )}
       </section>

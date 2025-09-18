@@ -1,18 +1,14 @@
 import dotenv from "dotenv";
 import Stripe from "stripe";
-import { PurchasedEvents } from "../models/ticketModel.js";
-import {Orders} from "../models/ordersModel.js";
-import mongoose from "mongoose";
 import { updatePurchasedEventsDB } from "../middleware/updatePurchasedEventsDB.js";
 import { updateOrdersDB } from "../middleware/updateOrdersDB.js";
 
-// stripe listen --forward-to localhost:3000/api/payment/webhook
-
 dotenv.config();
-
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const stripe = new Stripe(stripeSecretKey);
-const webhookSecret = "whsec_7cc6241ac2de8a49c27863d25f5ecbb36c21c044bbbb0be007d1b5532dc92ce7";
+const webhookSecret = process.env.WEB_HOOK_SECRET;
+const successUrl = process.env.FRONTEND_SUCCESS_URL;
+const failedUrl = process.env.FRONTEND_FAILED_URL;
 
 // Stripe Webhook
 const handleWebhook = async (req, res) => {
@@ -30,15 +26,23 @@ const handleWebhook = async (req, res) => {
         const eventHostEmail = session.metadata.eventHostEmail;
         const eventTitle = session.metadata.eventTitle;
         const buyer = session.metadata.buyer;
-        const amount = session.amount_total/100;
+        const amount = session.amount_total / 100;
         const orderId = session.payment_intent;
 
         // if (!mongoose.Types.ObjectId.isValid(session?.metadata?.userId)) {
         //   return res.status(400).json({ message: "Invalid User ID format" });
         // }
-        console.log("checkout session completed!!!")
+
         updatePurchasedEventsDB(userId, eventId);
-        updateOrdersDB(orderId, eventHostEmail, userId, eventId, eventTitle, buyer, amount);
+        updateOrdersDB(
+          orderId,
+          eventHostEmail,
+          userId,
+          eventId,
+          eventTitle,
+          buyer,
+          amount
+        );
 
         break;
       case "checkout.session.async_payment_succeeded":
@@ -83,8 +87,8 @@ const handleCheckoutSession = async (req, res) => {
       },
     ],
     mode: "payment",
-    cancel_url: "http://localhost:5173/failed",
-    success_url: "http://localhost:5173/profile",
+    cancel_url: failedUrl,
+    success_url: successUrl,
     metadata: {
       eventId: eventId,
       userId: userId,
@@ -93,7 +97,7 @@ const handleCheckoutSession = async (req, res) => {
       buyer: buyer,
     },
   });
-  console.log("=>",session.url)
+
   res.status(200).json(session.url);
 };
 
