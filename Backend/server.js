@@ -18,10 +18,11 @@ const app = express();
 
 dotenv.config({ path: "./.env" });
 
-const PORT = process.env.PORT || 3001;
+const FRONTEND_BASE_URL = process.env.FRONTEND_BASE_URL;
+// const PORT = process.env.PORT || 3001;
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: FRONTEND_BASE_URL,
   methods: "GET, POST, PATCH, DELETE",
   credentials: true,
   optionsSuccessStatus: 200,
@@ -29,8 +30,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
-app.post("/api/payment/webhook", express.raw({ type: "application/json" }), handleWebhook);
 app.use(express.json());
+app.post("/api/payment/webhook", express.raw({ type: "application/json" }), handleWebhook);
 app.use((req, res, next) => {
   if (mongoose.connection.readyState !== 1) {
     return res.status(503).json({ message: "Database not connected" });
@@ -45,6 +46,6 @@ app.use("/api/payment", paymentRoute);
 app.use("/api/orders", orderRoute);
 
 
-connectMongoDB(process.env.MONGO_URI);
+await connectMongoDB(process.env.MONGO_URI);
 
-module.exports = app;
+export default app;
