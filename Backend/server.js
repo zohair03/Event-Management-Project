@@ -47,6 +47,4 @@ app.use("/api/orders", orderRoute);
 
 connectMongoDB(process.env.MONGO_URI);
 
-app.listen(PORT, () => {
-  console.log(`server is live at port ${PORT}`);
-});
+module.exports = app;
